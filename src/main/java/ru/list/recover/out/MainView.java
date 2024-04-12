@@ -2,6 +2,9 @@ package ru.list.recover.out;
 
 import static java.lang.System.out;
 
+/**
+ * класс содержит методы, выводящие сообщения при работе с сервисом MainService
+ */
 public class MainView {
 
     public static void showTitle(){

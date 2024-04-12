@@ -3,6 +3,7 @@ package ru.list.recover.services;
 import java.time.LocalDateTime;
 import java.time.Month;
 
+import ru.list.recover.logger.Logger;
 import ru.list.recover.models.Practice;
 import ru.list.recover.models.TypeWorkout;
 import ru.list.recover.models.User;
@@ -32,6 +33,8 @@ public class Container implements IObserve{
     private User currentUser = null;
     private boolean repeat = true;
 
+    private Logger loger;
+
     public Container(){
         userRepository = new UserRepository();
         practiceRepository = new PracticeRepository();
@@ -41,12 +44,20 @@ public class Container implements IObserve{
         userService = Services.FabricUserService(this);
         userService.setRepository(userRepository);
         mainService = Services.FabricMainService(this);
+
         fitnessService = Services.FabricFitnessService(this);
         fitnessService.setRepository(practiceRepository);
         fitnessService.setWorkoutRepository(workoutRepository);
-        
+
+        adminService = Services.FabricAdminService(this);
+        adminService.setUserRepository(userRepository);
+        adminService.setWorkoutRepository(workoutRepository);
+        adminService.setPracticeRepository(practiceRepository);
+
+        loger = Logger.getInstance();
+
         // для тестов
-        this.testData();
+        this.fillTestData();
 
 
     }
@@ -57,6 +68,7 @@ public class Container implements IObserve{
      */
     public void run(){
 
+        loger.addRecord("Начало работы программы", true);
         do{
 
             mainService.title();
@@ -69,18 +81,21 @@ public class Container implements IObserve{
                 if(currentUser.getRole() == 0){
                     fitnessService.showMenu();
                 }else if(currentUser.getRole() == 1){
-                    
-
+                    adminService.showMenu();
                 }
                
             }
 
         }while(repeat);
         mainService.sayGoodBy();
+        loger.addRecord("Работа программы завершена", true);
 
     }
 
 
+   /**
+    * реализуем шаблон Наблюдатель
+    */
     @Override
     public void Observe(Object o) {
         if(o instanceof Integer res){
@@ -98,7 +113,7 @@ public class Container implements IObserve{
      * предназначен для начального заполнения репозиториев информацией
      * для проведения тестирования
      */
-    private void testData(){
+    private void fillTestData(){
 
         userRepository.insert(new User(1,"Вася Первый","user1","111",0));
         userRepository.insert(new User(2,"Иван Второй","user2","222",0));

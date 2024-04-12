@@ -10,5 +10,11 @@ public interface FitnessService extends Service{
     WorkoutRepository getWorkoutRepository();
     void setWorkoutRepository(WorkoutRepository workoutRepository);
     void showMenu();
-    
+    boolean addPractice();
+    boolean deletePractice();
+    boolean editPractice();
+    void showPractices();
+    void statistic();
+    void timeStatistic();
+    void caloriesStatistic();
 }

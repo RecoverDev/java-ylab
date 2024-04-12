@@ -16,8 +16,9 @@ public class FitnessView {
         out.println("1. Добавить тренировку");
         out.println("2. Удалить тренировку");
         out.println("3. Изменить тренировку");
-        out.println("4. Статистика");
-        out.println("5. Завершить сеанс работы");
+        out.println("4. Посмотреть свои тренировки");
+        out.println("5. Статистика");
+        out.println("6. Завершить сеанс работы");
     }
 
     /**
@@ -48,6 +49,9 @@ public class FitnessView {
         }
     }
 
+    /**
+     * выводит меню выбора вида статистики
+     */
     public static void showMenuStatistic(){
         out.println("Выберите вид статистики:");
         out.println("1. статистика по общему времени тренировок в минутах за выбранный период");

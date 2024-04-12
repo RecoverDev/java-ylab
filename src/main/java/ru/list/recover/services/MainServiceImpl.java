@@ -42,20 +42,4 @@ public class MainServiceImpl implements MainService {
         MainView.showFinal();
     }
 
-    public void showMenu(){
-        if(user.getRole() == 0){
-            this.showFitnessMenu();
-        }else if (user.getRole() == 1){
-            this.showAdminMenu();
-        }
-    }
-
-    public void showFitnessMenu(){
-
-    }
-
-    public void showAdminMenu(){
-
-    }
-
 }
