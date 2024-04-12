@@ -217,7 +217,7 @@ public class FitnessServiceImpl implements FitnessService{
 
         FitnessView.showMessage("Список пройденных тренировок:");
         FitnessView.showPractices(strPractices);
-
+        Response.getSrting("Для завершения просмотра нажмите ENTER ...");
     }
 
     /**
@@ -251,6 +251,8 @@ public class FitnessServiceImpl implements FitnessService{
                                     .mapToInt(p -> p.getAmount()).sum();
         
         FitnessView.showMessage("Общая продолжительность тренировок за выбранный период: " + fullTime);
+        Response.getSrting("Для завершения просмотра нажмите ENTER ...");
+
     }
 
     /**
@@ -264,6 +266,8 @@ public class FitnessServiceImpl implements FitnessService{
                                     .mapToDouble(p -> p.getCalories()).sum();
         
         FitnessView.showMessage("Количество соженных калорий за выбранный период: " + fullCalories);
+        Response.getSrting("Для завершения просмотра нажмите ENTER ...");
+
     }
 
     /**

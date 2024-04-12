@@ -151,6 +151,7 @@ public class AdminServiceImpl implements AdminService {
         listUsers.forEach(u -> strUsers.add(u.toString()));
 
         AdminView.showList(strUsers);
+        Response.getSrting("Для завершения просмотра нажмите ENTER ...");
     }
 
     /**
@@ -163,7 +164,7 @@ public class AdminServiceImpl implements AdminService {
         listWorkouts.forEach(w -> strWorkouts.add(w.toString()));
 
         AdminView.showList(strWorkouts);
-
+        Response.getSrting("Для завершения просмотра нажмите ENTER ...");
     }
 
     /**
@@ -177,6 +178,7 @@ public class AdminServiceImpl implements AdminService {
             strPractice.add(descPractice);
         }
         AdminView.showList(strPractice);
+        Response.getSrting("Для завершения просмотра нажмите ENTER ...");
     }
 
     /**
@@ -188,6 +190,7 @@ public class AdminServiceImpl implements AdminService {
         List<String> strLog = new ArrayList<>();
         log.getLog().forEach(r -> strLog.add(r.toString()));
         AdminView.showList(strLog);
+        Response.getSrting("Для завершения просмотра нажмите ENTER ...");
     }
 
 

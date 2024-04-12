@@ -42,6 +42,11 @@ public class Response {
         return result;
     }
 
+    /**
+     * получает от пользователя дату
+     * @param message - поясняющее сообщение
+     * @return - дата, введенная пользователем
+     */
     public static LocalDate getDate(String message){
         LocalDate result = LocalDate.of(2000, 1, 1);
         out.print(message);

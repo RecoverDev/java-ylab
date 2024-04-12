@@ -7,6 +7,9 @@ import static java.lang.System.out;
  */
 public class MainView {
 
+    /**
+     * выводит заголовок программы
+     */
     public static void showTitle(){
         out.print("\033[H\033[J");
         out.println("Программа \"МОЙ ФИТНЕС\"");
@@ -14,6 +17,9 @@ public class MainView {
         out.println();
     }
 
+    /**
+     * выводит сообщение по окончании работы программы
+     */
     public static void showFinal(){
         out.println("Работа программы завершена");
     }
