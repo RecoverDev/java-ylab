@@ -127,6 +127,9 @@ public class FitnessServiceImpl implements FitnessService{
             return false;
         }
         practice.setWorkout(workout);
+
+        LocalDate date = Response.getDate("Введите дату тренировки в формате ГГГГ-ММ-ДД: ");
+        practice.setDate(LocalDateTime.of(date, null));
        
         value = Response.getInt("Введите количество повторений: ");
         practice.setCountExercise(Math.max(value, 0));
