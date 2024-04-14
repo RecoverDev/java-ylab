@@ -18,6 +18,11 @@ public class Record {
     private String message;
     private boolean result;
 
+    
+    /** 
+     * переопределен метод toString
+     * @return String - строковое представление объекта
+     */
     @Override
     public String toString(){
         return String.format("%s %s %s", this.getDate().toString(), this.getMessage(), this.isResult() ? "УСПЕХ" : "НЕУСПЕХ");

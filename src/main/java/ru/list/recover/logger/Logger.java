@@ -16,14 +16,27 @@ public class Logger {
         log = new ArrayList<>();
     }
 
+    /**
+     * получаем экземпляр класса
+     * @return экземпляр класса Logger
+     */
     public static Logger getInstance(){
         return instance;
     }
 
+    /**
+     * добавляем запись в журнал
+     * @param line - описание события
+     * @param result - результат события true - успех, false - неуспех
+     */
     public void addRecord(String line, boolean result){
         log.add(new Record(LocalDateTime.now(), line, result));
     }
 
+    /**
+     * получить журнал
+     * @return список записей журнала
+     */
     public List<Record> getLog(){
         return log;
     }

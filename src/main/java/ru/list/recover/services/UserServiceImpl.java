@@ -13,6 +13,10 @@ public class UserServiceImpl implements UserService{
     private User user = null;
     private List<IObserve> listeners = new ArrayList<>();
 
+    
+    /** 
+     * @return UserRepository
+     */
     public UserRepository getRepository() {
         return repository;
     }

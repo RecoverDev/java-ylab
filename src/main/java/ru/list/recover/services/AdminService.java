@@ -1,6 +1,7 @@
 package ru.list.recover.services;
 
 import ru.list.recover.storages.PracticeRepository;
+import ru.list.recover.storages.PracticeRepositoryImpl;
 import ru.list.recover.storages.UserRepository;
 import ru.list.recover.storages.WorkoutRepository;
 

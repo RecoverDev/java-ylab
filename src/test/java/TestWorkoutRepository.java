@@ -4,12 +4,13 @@ import org.junit.jupiter.api.Test;
 import ru.list.recover.models.TypeWorkout;
 import ru.list.recover.models.Workout;
 import ru.list.recover.storages.WorkoutRepository;
+import ru.list.recover.storages.WorkoutRepositoryImpl;
 
 public class TestWorkoutRepository {
 
     @Test
     public void testInsert(){
-        WorkoutRepository repository = new WorkoutRepository();
+        WorkoutRepository repository = new WorkoutRepositoryImpl();
 
         Workout workout1 = new Workout(1, "Сайкл", new TypeWorkout(1,"Айробная"), 1500);
 
@@ -18,7 +19,7 @@ public class TestWorkoutRepository {
 
     @Test
     public void testDelete(){
-        WorkoutRepository repository = new WorkoutRepository();
+        WorkoutRepository repository = new WorkoutRepositoryImpl();
 
         Workout workout1 = new Workout(1, "Сайкл", new TypeWorkout(1,"Айробная"), 1500);
         Workout workout2 = new Workout(1, "Кроссфит", new TypeWorkout(1,"Айробная"), 1500);
@@ -32,7 +33,7 @@ public class TestWorkoutRepository {
 
     @Test
     public void testFindById(){
-        WorkoutRepository repository = new WorkoutRepository();
+        WorkoutRepository repository = new WorkoutRepositoryImpl();
 
         Workout workout1 = new Workout(1, "Сайкл", new TypeWorkout(1,"Кардио"), 1500);
         Workout workout2 = new Workout(1, "Кроссфит", new TypeWorkout(1,"Силовая"), 1500);
@@ -50,7 +51,7 @@ public class TestWorkoutRepository {
 
     @Test
     public void testCount(){
-        WorkoutRepository repository = new WorkoutRepository();
+        WorkoutRepository repository = new WorkoutRepositoryImpl();
 
         Workout workout1 = new Workout(1, "Сайкл", new TypeWorkout(1,"Кардио"), 1500);
         Workout workout2 = new Workout(1, "Кроссфит", new TypeWorkout(1,"Силовая"), 1500);
@@ -68,7 +69,7 @@ public class TestWorkoutRepository {
 
     @Test
     public void testUpdate(){
-        WorkoutRepository repository = new WorkoutRepository();
+        WorkoutRepository repository = new WorkoutRepositoryImpl();
 
         Workout workout1 = new Workout(1, "Сайкл", new TypeWorkout(1,"Кардио"), 1500);
         Workout workout2 = new Workout(1, "Кроссфит", new TypeWorkout(1,"Силовая"), 1500);

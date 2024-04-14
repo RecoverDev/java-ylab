@@ -1,54 +1,25 @@
 package ru.list.recover.storages;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import ru.list.recover.models.TypeWorkout;
 
-public class TypeWorkoutRepository implements Repository<TypeWorkout>{
+public interface TypeWorkoutRepository extends Repository<TypeWorkout>{
 
-    private List<TypeWorkout> typeWorkouts = new ArrayList<>();
+    /** 
+     * @param object
+     * @return boolean
+     */
+    boolean insert(TypeWorkout object);
 
-    @Override
-    public boolean insert(TypeWorkout object) {
-        object.setId(Math.max(object.getId(), 1));
-        if(typeWorkouts.stream().filter(u -> u.getId() == object.getId()).count() > 0){
-            int id = typeWorkouts.stream().map(u -> u.getId()).max((x,y) -> x.compareTo(y)).get() + 1;
-            object.setId(id);
-        }
-        return typeWorkouts.add(object);
-    }
+    boolean delete(TypeWorkout object);
 
-    @Override
-    public boolean delete(TypeWorkout object) {
-        return typeWorkouts.remove(object);    }
+    void update(TypeWorkout object);
 
-    @Override
-    public void update(TypeWorkout object) {
-        TypeWorkout typeWorkout = this.findById(object.getId());
-        if(typeWorkout == null){
-            this.insert(object);
-        }else{
-            int index = typeWorkouts.indexOf(typeWorkout);
-            typeWorkouts.set(index,object);
-        }
-    }
+    TypeWorkout findById(int id);
 
-    @Override
-    public TypeWorkout findById(int id) {
-        Optional<TypeWorkout> result = typeWorkouts.stream().filter(u -> u.getId() == id).findFirst();
-        return result.isPresent() ? result.get() : null;
-    }
+    List<TypeWorkout> findAll();
 
-    @Override
-    public List<TypeWorkout> findAll() {
-       return typeWorkouts;
-    }
-
-    @Override
-    public int getCount() {
-        return typeWorkouts.size();
-    }
+    int getCount();
 
 }

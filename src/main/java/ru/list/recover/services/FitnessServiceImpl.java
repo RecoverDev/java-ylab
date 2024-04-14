@@ -20,6 +20,10 @@ public class FitnessServiceImpl implements FitnessService{
     private PracticeRepository repository;
     private WorkoutRepository workouts;
 
+    
+    /** 
+     * @return WorkoutRepository
+     */
     @Override
     public WorkoutRepository getWorkoutRepository(){
         return workouts;

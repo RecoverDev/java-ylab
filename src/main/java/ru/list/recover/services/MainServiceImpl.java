@@ -11,6 +11,10 @@ public class MainServiceImpl implements MainService {
     private List<IObserve> listeners = new ArrayList<>();
 
 
+    
+    /** 
+     * @param user
+     */
     @Override
     public void setUser(User user) {
         this.user = user;

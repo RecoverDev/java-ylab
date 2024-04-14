@@ -20,6 +20,10 @@ public class proxyFitnessServiceImpl implements FitnessService{
         loger = Logger.getInstance();
     }
 
+    
+    /** 
+     * @param user
+     */
     @Override
     public void setUser(User user) {
         service.setUser(user);

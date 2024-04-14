@@ -21,6 +21,11 @@ public class User {
     private String password;
     private int role;
 
+    
+    /** 
+     * переопределен метод toString
+     * @return String - строковое представление объекта
+     */
     @Override
     public String toString(){
         return String.format("%s - %s",this.getName(), this.getRole() == 0 ? "спортсмен" : "администратор");

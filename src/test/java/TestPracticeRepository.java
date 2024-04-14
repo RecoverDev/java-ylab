@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import ru.list.recover.models.Practice;
 import ru.list.recover.models.User;
 import ru.list.recover.models.Workout;
-import ru.list.recover.storages.PracticeRepository;
+import ru.list.recover.storages.PracticeRepositoryImpl;
 
 public class TestPracticeRepository {
 
@@ -34,14 +34,14 @@ public class TestPracticeRepository {
 
     @Test
     public void testInsert(){
-        PracticeRepository repository = new PracticeRepository();
+        PracticeRepositoryImpl repository = new PracticeRepositoryImpl();
 
         Assertions.assertTrue(repository.insert(list.get(0)));
     }
 
     @Test
     public void testTrueDelete(){
-        PracticeRepository repository = new PracticeRepository();
+        PracticeRepositoryImpl repository = new PracticeRepositoryImpl();
 
         repository.insert(list.get(0));
         repository.insert(list.get(1));
@@ -53,7 +53,7 @@ public class TestPracticeRepository {
 
     @Test
     public void testFalseDelete(){
-        PracticeRepository repository = new PracticeRepository();
+        PracticeRepositoryImpl repository = new PracticeRepositoryImpl();
 
         repository.insert(list.get(0));
         repository.insert(list.get(1));
@@ -65,7 +65,7 @@ public class TestPracticeRepository {
 
     @Test
     public void testFindById(){
-        PracticeRepository repository = new PracticeRepository();
+        PracticeRepositoryImpl repository = new PracticeRepositoryImpl();
 
         repository.insert(list.get(0));
         repository.insert(list.get(1));
@@ -78,7 +78,7 @@ public class TestPracticeRepository {
 
     @Test
     public void testCount(){
-        PracticeRepository repository = new PracticeRepository();
+        PracticeRepositoryImpl repository = new PracticeRepositoryImpl();
 
         for(Practice practice : list){
             repository.insert(practice);

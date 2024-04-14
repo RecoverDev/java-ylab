@@ -9,9 +9,13 @@ import ru.list.recover.models.TypeWorkout;
 import ru.list.recover.models.User;
 import ru.list.recover.models.Workout;
 import ru.list.recover.storages.PracticeRepository;
+import ru.list.recover.storages.PracticeRepositoryImpl;
 import ru.list.recover.storages.TypeWorkoutRepository;
+import ru.list.recover.storages.TypeWorkoutRepositoryImpl;
 import ru.list.recover.storages.UserRepository;
+import ru.list.recover.storages.UserRepositoryImpl;
 import ru.list.recover.storages.WorkoutRepository;
+import ru.list.recover.storages.WorkoutRepositoryImpl;
 
 /**
  * класс создает и управляет вызовами сервисов и хранилищ,
@@ -36,10 +40,10 @@ public class Container implements IObserve{
     private Logger loger;
 
     public Container(){
-        userRepository = new UserRepository();
-        practiceRepository = new PracticeRepository();
-        typeWorkoutRepository = new TypeWorkoutRepository();
-        workoutRepository = new WorkoutRepository();
+        userRepository = new UserRepositoryImpl();
+        practiceRepository = new PracticeRepositoryImpl();
+        typeWorkoutRepository = new TypeWorkoutRepositoryImpl();
+        workoutRepository = new WorkoutRepositoryImpl();
 
         userService = Services.FabricUserService(this);
         userService.setRepository(userRepository);
