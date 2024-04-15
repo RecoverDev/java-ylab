@@ -3,14 +3,14 @@ import org.junit.jupiter.api.Test;
 
 import ru.list.recover.models.User;
 import ru.list.recover.services.UserServiceImpl;
-import ru.list.recover.storages.UserRepository;
+import ru.list.recover.storages.UserRepositoryImpl;
 
 public class testUserService {
 
     @Test
-    public void testLogin(){
+    public void testLogin() {
         UserServiceImpl service = new UserServiceImpl();
-        service.setRepository(new UserRepository());
+        service.setRepository(new UserRepositoryImpl());
 
         service.getRepository().insert(new User(0, "user1", "login1", "111", 0));
 

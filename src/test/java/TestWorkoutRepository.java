@@ -9,20 +9,20 @@ import ru.list.recover.storages.WorkoutRepositoryImpl;
 public class TestWorkoutRepository {
 
     @Test
-    public void testInsert(){
+    public void testInsert() {
         WorkoutRepository repository = new WorkoutRepositoryImpl();
 
-        Workout workout1 = new Workout(1, "Сайкл", new TypeWorkout(1,"Айробная"), 1500);
+        Workout workout1 = new Workout(1, "Сайкл", new TypeWorkout(1, "Айробная"), 1500);
 
         Assertions.assertTrue(repository.insert(workout1));
     }
 
     @Test
-    public void testDelete(){
+    public void testDelete() {
         WorkoutRepository repository = new WorkoutRepositoryImpl();
 
-        Workout workout1 = new Workout(1, "Сайкл", new TypeWorkout(1,"Айробная"), 1500);
-        Workout workout2 = new Workout(1, "Кроссфит", new TypeWorkout(1,"Айробная"), 1500);
+        Workout workout1 = new Workout(1, "Сайкл", new TypeWorkout(1, "Айробная"), 1500);
+        Workout workout2 = new Workout(1, "Кроссфит", new TypeWorkout(1, "Айробная"), 1500);
 
         repository.insert(workout1);
         repository.insert(workout2);
@@ -32,13 +32,13 @@ public class TestWorkoutRepository {
     }
 
     @Test
-    public void testFindById(){
+    public void testFindById() {
         WorkoutRepository repository = new WorkoutRepositoryImpl();
 
-        Workout workout1 = new Workout(1, "Сайкл", new TypeWorkout(1,"Кардио"), 1500);
-        Workout workout2 = new Workout(1, "Кроссфит", new TypeWorkout(1,"Силовая"), 1500);
-        Workout workout3 = new Workout(1, "Табата", new TypeWorkout(1,"Айробная"), 1500);
-        Workout workout4 = new Workout(1, "Стрейчинг", new TypeWorkout(1,"Растяжка"), 1500);
+        Workout workout1 = new Workout(1, "Сайкл", new TypeWorkout(1, "Кардио"), 1500);
+        Workout workout2 = new Workout(1, "Кроссфит", new TypeWorkout(1, "Силовая"), 1500);
+        Workout workout3 = new Workout(1, "Табата", new TypeWorkout(1, "Айробная"), 1500);
+        Workout workout4 = new Workout(1, "Стрейчинг", new TypeWorkout(1, "Растяжка"), 1500);
 
         repository.insert(workout1);
         repository.insert(workout2);
@@ -50,13 +50,13 @@ public class TestWorkoutRepository {
     }
 
     @Test
-    public void testCount(){
+    public void testCount() {
         WorkoutRepository repository = new WorkoutRepositoryImpl();
 
-        Workout workout1 = new Workout(1, "Сайкл", new TypeWorkout(1,"Кардио"), 1500);
-        Workout workout2 = new Workout(1, "Кроссфит", new TypeWorkout(1,"Силовая"), 1500);
-        Workout workout3 = new Workout(1, "Табата", new TypeWorkout(1,"Айробная"), 1500);
-        Workout workout4 = new Workout(1, "Стрейчинг", new TypeWorkout(1,"Растяжка"), 200);
+        Workout workout1 = new Workout(1, "Сайкл", new TypeWorkout(1, "Кардио"), 1500);
+        Workout workout2 = new Workout(1, "Кроссфит", new TypeWorkout(1, "Силовая"), 1500);
+        Workout workout3 = new Workout(1, "Табата", new TypeWorkout(1, "Айробная"), 1500);
+        Workout workout4 = new Workout(1, "Стрейчинг", new TypeWorkout(1, "Растяжка"), 200);
 
         repository.insert(workout1);
         repository.insert(workout2);
@@ -68,20 +68,20 @@ public class TestWorkoutRepository {
     }
 
     @Test
-    public void testUpdate(){
+    public void testUpdate() {
         WorkoutRepository repository = new WorkoutRepositoryImpl();
 
-        Workout workout1 = new Workout(1, "Сайкл", new TypeWorkout(1,"Кардио"), 1500);
-        Workout workout2 = new Workout(1, "Кроссфит", new TypeWorkout(1,"Силовая"), 1500);
-        Workout workout3 = new Workout(1, "Табата", new TypeWorkout(1,"Айробная"), 1500);
-        Workout workout4 = new Workout(1, "Стрейчинг", new TypeWorkout(1,"Растяжка"), 200);
+        Workout workout1 = new Workout(1, "Сайкл", new TypeWorkout(1, "Кардио"), 1500);
+        Workout workout2 = new Workout(1, "Кроссфит", new TypeWorkout(1, "Силовая"), 1500);
+        Workout workout3 = new Workout(1, "Табата", new TypeWorkout(1, "Айробная"), 1500);
+        Workout workout4 = new Workout(1, "Стрейчинг", new TypeWorkout(1, "Растяжка"), 200);
 
         repository.insert(workout1);
         repository.insert(workout2);
         repository.insert(workout3);
         repository.insert(workout4);
 
-        Workout newWorkout = new Workout(3, "Табата", new TypeWorkout(1,"Айробная"), 2000);
+        Workout newWorkout = new Workout(3, "Табата", new TypeWorkout(1, "Айробная"), 2000);
 
         repository.update(newWorkout);
 

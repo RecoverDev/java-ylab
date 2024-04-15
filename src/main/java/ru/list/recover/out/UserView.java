@@ -3,7 +3,8 @@ package ru.list.recover.out;
 import static java.lang.System.out;
 
 /**
- * UserView - класс, выводящий сообщения необходимые для работы со списком пользователей
+ * UserView - класс, выводящий сообщения необходимые для работы со списком
+ * пользователей
  */
 
 public class UserView {
@@ -13,7 +14,7 @@ public class UserView {
      * 1 - вход зарегистрированного пользователя
      * 2 - создание нового пользователя
      */
-    public static void autorizationMenu(){
+    public static void autorizationMenu() {
         out.println("1. Вход");
         out.println("2. Регистрация");
         out.println();
@@ -21,9 +22,10 @@ public class UserView {
 
     /**
      * Выводит на экран соощения
+     * 
      * @param message - текст сообщения
      */
-    public static void sayMessage(String message){
+    public static void sayMessage(String message) {
         out.println(message);
     }
 

@@ -6,26 +6,25 @@ import java.util.Optional;
 
 import ru.list.recover.models.User;
 
-public class UserRepositoryImpl implements UserRepository{
+public class UserRepositoryImpl implements UserRepository {
 
     private List<User> users = new ArrayList<>();
 
-    
-    /** 
+    /**
      * @param object
      * @return boolean
      */
     @Override
     public boolean insert(User object) {
         object.setId(Math.max(object.getId(), 1));
-        if(users.stream().filter(u -> u.getId() == object.getId()).count() > 0){
-            int id = users.stream().map(u -> u.getId()).max((x,y) -> x.compareTo(y)).get() + 1;
+        if (users.stream().filter(u -> u.getId() == object.getId()).count() > 0) {
+            int id = users.stream().map(u -> u.getId()).max((x, y) -> x.compareTo(y)).get() + 1;
             object.setId(id);
         }
-        if(users.stream().filter(u -> u.getName().equals(object.getName())).count() > 0){
+        if (users.stream().filter(u -> u.getName().equals(object.getName())).count() > 0) {
             return false;
         }
-        if(users.stream().filter(u -> u.getLogin().equals(object.getLogin())).count() > 0){
+        if (users.stream().filter(u -> u.getLogin().equals(object.getLogin())).count() > 0) {
             return false;
         }
         return users.add(object);
@@ -48,18 +47,18 @@ public class UserRepositoryImpl implements UserRepository{
     }
 
     @Override
-    public int getCount(){
+    public int getCount() {
         return users.size();
     }
 
     @Override
-    public User findByLogin(String login){
+    public User findByLogin(String login) {
         Optional<User> user = users.stream().filter(u -> u.getLogin().equals(login)).findFirst();
         return user.isPresent() ? user.get() : null;
     }
 
     @Override
-    public User findByName(String login){
+    public User findByName(String login) {
         Optional<User> user = users.stream().filter(u -> u.getName().equals(login)).findFirst();
         return user.isPresent() ? user.get() : null;
     }
@@ -67,13 +66,13 @@ public class UserRepositoryImpl implements UserRepository{
     @Override
     public void update(User object) {
         User user = this.findById(object.getId());
-        if(user == null){
+        if (user == null) {
             this.insert(object);
-        }else{
+        } else {
             int index = users.indexOf(user);
-            users.set(index,object);
+            users.set(index, object);
         }
-        
+
     }
 
 }

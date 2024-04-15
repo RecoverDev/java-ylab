@@ -12,7 +12,7 @@ public class AdminView {
     /**
      * выводит меню работы администратора
      */
-    public static void showMenu(){
+    public static void showMenu() {
         out.println("1. Просмотр списка пользователей");
         out.println("2. Просмотр списка вариантов тренировок");
         out.println("3. Просмотр посещений пользователей");
@@ -22,9 +22,10 @@ public class AdminView {
 
     /**
      * выводит список строк на экран
+     * 
      * @param list - список строк
      */
-    public static void showList(List<String> list){
+    public static void showList(List<String> list) {
         for (String string : list) {
             out.println(string);
         }

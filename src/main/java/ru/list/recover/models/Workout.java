@@ -25,13 +25,13 @@ public class Workout {
     private TypeWorkout type;
     private double calories;
 
-    
-    /** 
+    /**
      * переопределен метод toString
+     * 
      * @return String - строковое представление объекта
      */
     @Override
-    public String toString(){
+    public String toString() {
         return String.format("%d %s (%s)", this.getId(), this.getName(), this.getType().getName());
     }
 

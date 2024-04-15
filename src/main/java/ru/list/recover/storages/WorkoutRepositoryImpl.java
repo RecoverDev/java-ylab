@@ -6,25 +6,24 @@ import java.util.Optional;
 
 import ru.list.recover.models.Workout;
 
-public class WorkoutRepositoryImpl implements WorkoutRepository{
+public class WorkoutRepositoryImpl implements WorkoutRepository {
 
     private List<Workout> workouts = new ArrayList<>();
 
-    
-    /** 
+    /**
      * @param object
      * @return boolean
      */
     @Override
     public boolean insert(Workout object) {
         object.setId(Math.max(object.getId(), 1));
-        if(workouts.stream().filter(u -> u.getId() == object.getId()).count() > 0){
-            int id = workouts.stream().map(u -> u.getId()).max((x,y) -> x.compareTo(y)).get() + 1;
+        if (workouts.stream().filter(u -> u.getId() == object.getId()).count() > 0) {
+            int id = workouts.stream().map(u -> u.getId()).max((x, y) -> x.compareTo(y)).get() + 1;
             object.setId(id);
         }
 
         return workouts.add(object);
-        
+
     }
 
     @Override
@@ -51,13 +50,13 @@ public class WorkoutRepositoryImpl implements WorkoutRepository{
     @Override
     public void update(Workout object) {
         Workout workout = this.findById(object.getId());
-        if(workout == null){
+        if (workout == null) {
             this.insert(object);
-        }else{
+        } else {
             int index = workouts.indexOf(workout);
-            workouts.set(index,object);
+            workouts.set(index, object);
         }
-        
+
     }
 
 }

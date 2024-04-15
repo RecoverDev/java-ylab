@@ -6,20 +6,19 @@ import java.util.Optional;
 
 import ru.list.recover.models.TypeWorkout;
 
-public class TypeWorkoutRepositoryImpl implements TypeWorkoutRepository{
+public class TypeWorkoutRepositoryImpl implements TypeWorkoutRepository {
 
     private List<TypeWorkout> typeWorkouts = new ArrayList<>();
 
-    
-    /** 
+    /**
      * @param object
      * @return boolean
      */
     @Override
     public boolean insert(TypeWorkout object) {
         object.setId(Math.max(object.getId(), 1));
-        if(typeWorkouts.stream().filter(u -> u.getId() == object.getId()).count() > 0){
-            int id = typeWorkouts.stream().map(u -> u.getId()).max((x,y) -> x.compareTo(y)).get() + 1;
+        if (typeWorkouts.stream().filter(u -> u.getId() == object.getId()).count() > 0) {
+            int id = typeWorkouts.stream().map(u -> u.getId()).max((x, y) -> x.compareTo(y)).get() + 1;
             object.setId(id);
         }
         return typeWorkouts.add(object);
@@ -27,16 +26,17 @@ public class TypeWorkoutRepositoryImpl implements TypeWorkoutRepository{
 
     @Override
     public boolean delete(TypeWorkout object) {
-        return typeWorkouts.remove(object);    }
+        return typeWorkouts.remove(object);
+    }
 
     @Override
     public void update(TypeWorkout object) {
         TypeWorkout typeWorkout = this.findById(object.getId());
-        if(typeWorkout == null){
+        if (typeWorkout == null) {
             this.insert(object);
-        }else{
+        } else {
             int index = typeWorkouts.indexOf(typeWorkout);
-            typeWorkouts.set(index,object);
+            typeWorkouts.set(index, object);
         }
     }
 
@@ -48,7 +48,7 @@ public class TypeWorkoutRepositoryImpl implements TypeWorkoutRepository{
 
     @Override
     public List<TypeWorkout> findAll() {
-       return typeWorkouts;
+        return typeWorkouts;
     }
 
     @Override

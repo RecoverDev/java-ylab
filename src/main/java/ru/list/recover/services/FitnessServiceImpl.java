@@ -14,23 +14,22 @@ import ru.list.recover.out.FitnessView;
 import ru.list.recover.storages.PracticeRepository;
 import ru.list.recover.storages.WorkoutRepository;
 
-public class FitnessServiceImpl implements FitnessService{
+public class FitnessServiceImpl implements FitnessService {
     private User user;
     private List<IObserve> listeners = new ArrayList<>();
     private PracticeRepository repository;
     private WorkoutRepository workouts;
 
-    
-    /** 
+    /**
      * @return WorkoutRepository
      */
     @Override
-    public WorkoutRepository getWorkoutRepository(){
+    public WorkoutRepository getWorkoutRepository() {
         return workouts;
     }
 
     @Override
-    public void setWorkoutRepository(WorkoutRepository workoutRepository){
+    public void setWorkoutRepository(WorkoutRepository workoutRepository) {
         this.workouts = workoutRepository;
     }
 
@@ -43,8 +42,6 @@ public class FitnessServiceImpl implements FitnessService{
     public PracticeRepository getRepository() {
         return this.repository;
     }
-    
-
 
     @Override
     public void setUser(User user) {
@@ -68,27 +65,27 @@ public class FitnessServiceImpl implements FitnessService{
         }
     }
 
-    public void showMenu(){
+    public void showMenu() {
         FitnessView.showMenu();
         int answer = Response.getInt("Выберите режим работы: ");
 
         switch (answer) {
-            //добавить тренировку
+            // добавить тренировку
             case 1:
                 this.addPractice();
                 break;
-            //удалить тренировку
+            // удалить тренировку
             case 2:
                 this.deletePractice();
                 break;
-            //редактировать тренировку
+            // редактировать тренировку
             case 3:
                 this.editPractice();
                 break;
-            //посмотреть тренировки
+            // посмотреть тренировки
             case 4:
                 this.showPractices();
-            //статистика
+                // статистика
             case 5:
                 this.statistic();
                 break;
@@ -100,13 +97,13 @@ public class FitnessServiceImpl implements FitnessService{
                 break;
         }
         this.Observe(answer);
-        
+
     }
 
     /**
      * добавляет новую тренировку в журнал спортсмену
      */
-    public boolean addPractice(){
+    public boolean addPractice() {
         int value = 0;
         Practice practice = new Practice(1, LocalDateTime.now(), user, null, 0, 0, 0, "");
 
@@ -121,12 +118,12 @@ public class FitnessServiceImpl implements FitnessService{
         value = Response.getInt("Введите номер тренировки: (1 - " + workouts.getCount() + "): ");
 
         Workout workout = workouts.findById(value);
-        if(workout == null){
+        if (workout == null) {
             FitnessView.showMessage("Такой тренировки не существует");
             return false;
         }
 
-        if (presentTypeWorkoput(workout.getType())){
+        if (presentTypeWorkoput(workout.getType())) {
             FitnessView.showMessage("Тренировка такого типа сегодня уже была");
             return false;
         }
@@ -134,7 +131,7 @@ public class FitnessServiceImpl implements FitnessService{
 
         LocalDate date = Response.getDate("Введите дату тренировки в формате ГГГГ-ММ-ДД: ");
         practice.setDate(LocalDateTime.of(date, null));
-       
+
         value = Response.getInt("Введите количество повторений: ");
         practice.setCountExercise(Math.max(value, 0));
 
@@ -153,7 +150,7 @@ public class FitnessServiceImpl implements FitnessService{
     /**
      * удаляет выбранную тренировку пользователя
      */
-    public boolean deletePractice(){
+    public boolean deletePractice() {
         List<Practice> practices = getPracticeByUser();
 
         List<String> strPractices = new ArrayList<>();
@@ -164,7 +161,7 @@ public class FitnessServiceImpl implements FitnessService{
         int value = Response.getInt("Введите номер удаляемой тренировки(1 - " + practices.size() + "): ");
         Practice practice = repository.findById(value);
 
-        if(practice == null){
+        if (practice == null) {
             FitnessView.showMessage("Такой тренировки не существует");
             return false;
         }
@@ -175,7 +172,7 @@ public class FitnessServiceImpl implements FitnessService{
     /**
      * редактирует выбранную тренировку
      */
-    public boolean editPractice(){
+    public boolean editPractice() {
         List<Practice> practices = getPracticeByUser();
         List<String> strPractices = new ArrayList<>();
         practices.forEach(p -> strPractices.add(p.toString()));
@@ -185,7 +182,7 @@ public class FitnessServiceImpl implements FitnessService{
         int value = Response.getInt("Введите номер редактируемой тренировки(1 - " + practices.size() + "): ");
         Practice practice = repository.findById(value);
 
-        if(practice == null){
+        if (practice == null) {
             FitnessView.showMessage("Такой тренировки не существует");
             return false;
         }
@@ -209,11 +206,10 @@ public class FitnessServiceImpl implements FitnessService{
         return true;
     }
 
-
     /**
      * показывает список тренировок пользователя
      */
-    public void showPractices(){
+    public void showPractices() {
         List<Practice> practices = getPracticeByUser();
 
         List<String> strPractices = new ArrayList<>();
@@ -227,7 +223,7 @@ public class FitnessServiceImpl implements FitnessService{
     /**
      * показывает статистику по пользователю
      */
-    public void statistic(){
+    public void statistic() {
         FitnessView.showMenuStatistic();
         int answer = Response.getInt("Введите номер варианта статистики: ");
         switch (answer) {
@@ -247,28 +243,33 @@ public class FitnessServiceImpl implements FitnessService{
      * показывает статистику по пользователю по общей продолжительности тренировок
      * за выбранный период
      */
-    public void timeStatistic(){
+    public void timeStatistic() {
         LocalDate date1 = Response.getDate("Введите начало периода в формате ГГГГ-ММ-ДД: ");
         LocalDate date2 = Response.getDate("Введите окончание периода в формате ГГГГ-ММ-ДД: ");
         List<Practice> list = this.getPracticeByUser();
-        int fullTime = list.stream().filter(p -> (p.getDate().toLocalDate().compareTo(date1) >= 0 && p.getDate().toLocalDate().compareTo(date2) <= 0))
-                                    .mapToInt(p -> p.getAmount()).sum();
-        
+        int fullTime = list.stream()
+                .filter(p -> (p.getDate().toLocalDate().compareTo(date1) >= 0
+                        && p.getDate().toLocalDate().compareTo(date2) <= 0))
+                .mapToInt(p -> p.getAmount()).sum();
+
         FitnessView.showMessage("Общая продолжительность тренировок за выбранный период: " + fullTime);
         Response.getSrting("Для завершения просмотра нажмите ENTER ...");
 
     }
 
     /**
-     * показывает статистику по пользователю по количеству соженных калорий за выбранный период
+     * показывает статистику по пользователю по количеству соженных калорий за
+     * выбранный период
      */
-    public void caloriesStatistic(){
+    public void caloriesStatistic() {
         LocalDate date1 = Response.getDate("Введите начало периода в формате ГГГГ-ММ-ДД: ");
         LocalDate date2 = Response.getDate("Введите окончание периода в формате ГГГГ-ММ-ДД: ");
         List<Practice> list = this.getPracticeByUser();
-        double fullCalories = list.stream().filter(p -> (p.getDate().toLocalDate().compareTo(date1) >= 0 && p.getDate().toLocalDate().compareTo(date2) <= 0))
-                                    .mapToDouble(p -> p.getCalories()).sum();
-        
+        double fullCalories = list.stream()
+                .filter(p -> (p.getDate().toLocalDate().compareTo(date1) >= 0
+                        && p.getDate().toLocalDate().compareTo(date2) <= 0))
+                .mapToDouble(p -> p.getCalories()).sum();
+
         FitnessView.showMessage("Количество соженных калорий за выбранный период: " + fullCalories);
         Response.getSrting("Для завершения просмотра нажмите ENTER ...");
 
@@ -276,25 +277,26 @@ public class FitnessServiceImpl implements FitnessService{
 
     /**
      * возвращает список тренировок пользователя
+     * 
      * @return - список тренировок пользователя
      */
-    private List<Practice> getPracticeByUser(){
+    private List<Practice> getPracticeByUser() {
         return repository.findAll().stream().filter(p -> p.getUser() == user).toList();
     }
 
     /**
      * проверяет наличие тренировки указанного типа за сегодняшний день
+     * 
      * @param type - искомый тип тренировки
      * @return true - если тренировки такого типа сегодня были
      */
-    private boolean presentTypeWorkoput(TypeWorkout type){
-        if(repository.findAll().stream().filter(p -> p.getUser() == user)
-                                        .filter(p -> p.getDate().toLocalDate().equals(LocalDate.now()))
-                                        .filter(p -> p.getWorkout().getType() == type).count() > 0){
+    private boolean presentTypeWorkoput(TypeWorkout type) {
+        if (repository.findAll().stream().filter(p -> p.getUser() == user)
+                .filter(p -> p.getDate().toLocalDate().equals(LocalDate.now()))
+                .filter(p -> p.getWorkout().getType() == type).count() > 0) {
             return true;
         }
         return false;
     }
-
 
 }

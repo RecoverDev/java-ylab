@@ -16,31 +16,30 @@ public class TestPracticeRepository {
     private static List<Practice> list;
 
     @BeforeAll
-    private static void FillListPractice(){
+    private static void FillListPractice() {
 
         list = new ArrayList<>();
 
-        for(int i = 0; i < 10; i++){
-            list.add(new Practice(1, 
-                    LocalDateTime.now(), 
-                    new User(0, null, null, null, 0), 
-                    new Workout(0, null, null, 0), 
-                    12, 
+        for (int i = 0; i < 10; i++) {
+            list.add(new Practice(1,
+                    LocalDateTime.now(),
+                    new User(0, null, null, null, 0),
+                    new Workout(0, null, null, 0),
+                    12,
                     120, 1500, ""));
         }
-
 
     }
 
     @Test
-    public void testInsert(){
+    public void testInsert() {
         PracticeRepositoryImpl repository = new PracticeRepositoryImpl();
 
         Assertions.assertTrue(repository.insert(list.get(0)));
     }
 
     @Test
-    public void testTrueDelete(){
+    public void testTrueDelete() {
         PracticeRepositoryImpl repository = new PracticeRepositoryImpl();
 
         repository.insert(list.get(0));
@@ -52,7 +51,7 @@ public class TestPracticeRepository {
     }
 
     @Test
-    public void testFalseDelete(){
+    public void testFalseDelete() {
         PracticeRepositoryImpl repository = new PracticeRepositoryImpl();
 
         repository.insert(list.get(0));
@@ -64,7 +63,7 @@ public class TestPracticeRepository {
     }
 
     @Test
-    public void testFindById(){
+    public void testFindById() {
         PracticeRepositoryImpl repository = new PracticeRepositoryImpl();
 
         repository.insert(list.get(0));
@@ -77,10 +76,10 @@ public class TestPracticeRepository {
     }
 
     @Test
-    public void testCount(){
+    public void testCount() {
         PracticeRepositoryImpl repository = new PracticeRepositoryImpl();
 
-        for(Practice practice : list){
+        for (Practice practice : list) {
             repository.insert(practice);
         }
 

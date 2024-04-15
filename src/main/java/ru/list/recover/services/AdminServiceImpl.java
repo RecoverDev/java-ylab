@@ -23,9 +23,9 @@ public class AdminServiceImpl implements AdminService {
     private WorkoutRepository workoutRepository;
     private PracticeRepository practiceRepository;
 
-    
     /**
      * возвращает список посещений пользователей
+     * 
      * @return объект класса PracticeRepository
      */
     public PracticeRepository getPracticeRepository() {
@@ -34,6 +34,7 @@ public class AdminServiceImpl implements AdminService {
 
     /**
      * определяет в классе список посещений пользователей
+     * 
      * @param practiceRepository объект класса PracticeRepository
      */
     public void setPracticeRepository(PracticeRepository practiceRepository) {
@@ -42,6 +43,7 @@ public class AdminServiceImpl implements AdminService {
 
     /**
      * возвращает хранилище списка возможных вариантов тренировок
+     * 
      * @return объект класса WorkoutRepository
      */
     public WorkoutRepository getWorkoutRepository() {
@@ -50,6 +52,7 @@ public class AdminServiceImpl implements AdminService {
 
     /**
      * определяет в классе список возможных вариантов тренировок
+     * 
      * @param workoutRepository объект класса WorkoutRepository
      */
     public void setWorkoutRepository(WorkoutRepository workoutRepository) {
@@ -58,6 +61,7 @@ public class AdminServiceImpl implements AdminService {
 
     /**
      * возвращает хранилище списка пользователей программы
+     * 
      * @return хранилище списка пользователей
      */
     public UserRepository getUserRepository() {
@@ -66,6 +70,7 @@ public class AdminServiceImpl implements AdminService {
 
     /**
      * определяет в классе хранилище списка пользователей
+     * 
      * @param userRepository - Repository пользователей (класс User)
      */
     public void setUserRepository(UserRepository userRepository) {
@@ -97,8 +102,8 @@ public class AdminServiceImpl implements AdminService {
     }
 
     /**
-     * реализует шаблон Наблюдатель 
-     * */    
+     * реализует шаблон Наблюдатель
+     */
     @Override
     public void Observe(Object o) {
         for (IObserve obleve : listeners) {
@@ -109,24 +114,24 @@ public class AdminServiceImpl implements AdminService {
     /**
      * показывает главное меню работы администратора
      */
-    public void showMenu(){
+    public void showMenu() {
         AdminView.showMenu();
         int answer = Response.getInt("Введите номер пункта меню: ");
 
         switch (answer) {
-            //список пользователей
+            // список пользователей
             case 1:
                 this.showUsers();
                 break;
-            //список доступных тренировок
+            // список доступных тренировок
             case 2:
                 this.showWorkouts();
                 break;
-            //посещения пользователей
+            // посещения пользователей
             case 3:
                 this.showPractices();
                 break;
-            //просмотр журнала
+            // просмотр журнала
             case 4:
                 this.showLog();
                 break;
@@ -144,7 +149,7 @@ public class AdminServiceImpl implements AdminService {
     /**
      * выводит список пользователей программы
      */
-    public void showUsers(){
+    public void showUsers() {
         List<User> listUsers = this.getUserRepository().findAll();
         List<String> strUsers = new ArrayList<>();
 
@@ -157,7 +162,7 @@ public class AdminServiceImpl implements AdminService {
     /**
      * выводит список доступных вариантов тренировок
      */
-    public void showWorkouts(){
+    public void showWorkouts() {
         List<Workout> listWorkouts = workoutRepository.findAll();
         List<String> strWorkouts = new ArrayList<>();
 
@@ -170,11 +175,12 @@ public class AdminServiceImpl implements AdminService {
     /**
      * выводит список проведенных тренировок
      */
-    public void showPractices(){
+    public void showPractices() {
         List<Practice> listPractices = practiceRepository.findAll();
         List<String> strPractice = new ArrayList<>();
         for (Practice p : listPractices) {
-            String descPractice = String.format("%s %s %s(%s) %s минут", p.getDate().toString(), p.getUser().getName(), p.getWorkout().getName(), p.getWorkout().getType().getName(), p.getAmount());
+            String descPractice = String.format("%s %s %s(%s) %s минут", p.getDate().toString(), p.getUser().getName(),
+                    p.getWorkout().getName(), p.getWorkout().getType().getName(), p.getAmount());
             strPractice.add(descPractice);
         }
         AdminView.showList(strPractice);
@@ -184,7 +190,7 @@ public class AdminServiceImpl implements AdminService {
     /**
      * выводит содержимое журнала
      */
-    public void showLog(){
+    public void showLog() {
         Logger log = Logger.getInstance();
 
         List<String> strLog = new ArrayList<>();
@@ -192,7 +198,5 @@ public class AdminServiceImpl implements AdminService {
         AdminView.showList(strLog);
         Response.getSrting("Для завершения просмотра нажмите ENTER ...");
     }
-
-
 
 }

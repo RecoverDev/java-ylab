@@ -4,9 +4,9 @@ import java.util.List;
 
 import ru.list.recover.models.TypeWorkout;
 
-public interface TypeWorkoutRepository extends Repository<TypeWorkout>{
+public interface TypeWorkoutRepository extends Repository<TypeWorkout> {
 
-    /** 
+    /**
      * @param object
      * @return boolean
      */

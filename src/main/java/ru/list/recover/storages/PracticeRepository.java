@@ -4,9 +4,9 @@ import java.util.List;
 
 import ru.list.recover.models.Practice;
 
-public interface PracticeRepository extends Repository<Practice>{
+public interface PracticeRepository extends Repository<Practice> {
 
-    /** 
+    /**
      * @param object
      * @return boolean
      */

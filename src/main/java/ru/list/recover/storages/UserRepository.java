@@ -4,9 +4,9 @@ import java.util.List;
 
 import ru.list.recover.models.User;
 
-public interface UserRepository extends Repository<User>{
+public interface UserRepository extends Repository<User> {
 
-    /** 
+    /**
      * @param object
      * @return boolean
      */

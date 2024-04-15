@@ -8,37 +8,34 @@ import ru.list.recover.models.User;
 import ru.list.recover.out.UserView;
 import ru.list.recover.storages.UserRepository;
 
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     private UserRepository repository;
     private User user = null;
     private List<IObserve> listeners = new ArrayList<>();
 
-    
-    /** 
+    /**
      * @return UserRepository
      */
     public UserRepository getRepository() {
         return repository;
     }
 
-    
     public void setRepository(UserRepository repository) {
         this.repository = repository;
     }
 
     @Override
-    public void addListener(IObserve observe){
+    public void addListener(IObserve observe) {
         this.listeners.add(observe);
     }
-  
+
     @Override
-    public void removeListener(IObserve observe){
+    public void removeListener(IObserve observe) {
         this.listeners.remove(observe);
     }
 
-
     @Override
-    public User autorization(){
+    public User autorization() {
         User result = null;
         int answer = 0;
 
@@ -51,7 +48,7 @@ public class UserServiceImpl implements UserService{
                 break;
             case 2:
                 User user = this.registration();
-                if(user != null){
+                if (user != null) {
                     repository.insert(user);
                 }
             default:
@@ -62,51 +59,51 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User login(){
+    public User login() {
         User result = null;
 
         String name = Response.getSrting("Введите логин: ");
         String pass = Response.getSrting("Введите пароль: ");
 
         User searchUser = repository.findByLogin(name);
-        if(searchUser != null){
-            if(searchUser.getPassword().equals(pass)){
+        if (searchUser != null) {
+            if (searchUser.getPassword().equals(pass)) {
                 result = searchUser;
             }
         }
 
-        if(result == null){
+        if (result == null) {
             UserView.sayMessage("Неверный логин или пароль");
         }
         return result;
     }
 
     @Override
-    public User registration(){
-        User result  = new User(1, "", "", "", 0);
+    public User registration() {
+        User result = new User(1, "", "", "", 0);
         String value = "";
 
         value = Response.getSrting("Введите имя: ");
-        if(repository.findByName(value) == null){
+        if (repository.findByName(value) == null) {
             result.setName(value);
-        }else{
+        } else {
             UserView.sayMessage("Пользователь с таким именем существует");
             return null;
         }
         value = Response.getSrting("Введите логин: ");
-        if(repository.findByLogin(value) == null){
+        if (repository.findByLogin(value) == null) {
             result.setLogin(value);
-        }else{
+        } else {
             UserView.sayMessage("Пользователь с таким логином существует");
             return null;
         }
         value = Response.getSrting("Введите пароль: ");
         result.setPassword(value);
 
-        if(user != null){
-            if(user.getRole() == 1){
+        if (user != null) {
+            if (user.getRole() == 1) {
                 int role = Response.getInt("Введите роль пользователя (0 - спортсмен, 1 - администратор)");
-                if(role  >= 0){
+                if (role >= 0) {
                     result.setRole(role);
                 }
             }

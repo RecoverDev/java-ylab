@@ -12,7 +12,7 @@ public class Logger {
     private static final Logger instance = new Logger();
     private List<Record> log;
 
-    private Logger(){
+    private Logger() {
         log = new ArrayList<>();
     }
 
@@ -20,7 +20,7 @@ public class Logger {
      * получаем экземпляр класса
      * @return экземпляр класса Logger
      */
-    public static Logger getInstance(){
+    public static Logger getInstance() {
         return instance;
     }
 
@@ -29,7 +29,7 @@ public class Logger {
      * @param line - описание события
      * @param result - результат события true - успех, false - неуспех
      */
-    public void addRecord(String line, boolean result){
+    public void addRecord(String line, boolean result) {
         log.add(new Record(LocalDateTime.now(), line, result));
     }
 
@@ -37,7 +37,7 @@ public class Logger {
      * получить журнал
      * @return список записей журнала
      */
-    public List<Record> getLog(){
+    public List<Record> getLog() {
         return log;
     }
 }

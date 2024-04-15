@@ -8,20 +8,19 @@ import ru.list.recover.storages.PracticeRepository;
 import ru.list.recover.storages.WorkoutRepository;
 
 /**
- * для обеспечения журналирования реализуем шаблон Посредник 
+ * для обеспечения журналирования реализуем шаблон Посредник
  * для класса FitnessServiceImpl
  */
-public class proxyFitnessServiceImpl implements FitnessService{
+public class proxyFitnessServiceImpl implements FitnessService {
     private FitnessServiceImpl service;
     private Logger loger;
 
-    public proxyFitnessServiceImpl(){
+    public proxyFitnessServiceImpl() {
         service = new FitnessServiceImpl();
         loger = Logger.getInstance();
     }
 
-    
-    /** 
+    /**
      * @param user
      */
     @Override
@@ -70,22 +69,22 @@ public class proxyFitnessServiceImpl implements FitnessService{
         int answer = Response.getInt("Выберите режим работы: ");
 
         switch (answer) {
-            //добавить тренировку
+            // добавить тренировку
             case 1:
                 this.addPractice();
                 break;
-            //удалить тренировку
+            // удалить тренировку
             case 2:
                 this.deletePractice();
                 break;
-            //редактировать тренировку
+            // редактировать тренировку
             case 3:
                 this.editPractice();
                 break;
-            //посмотреть тренировки
+            // посмотреть тренировки
             case 4:
                 this.showPractices();
-            //статистика
+                // статистика
             case 5:
                 this.statistic();
                 break;
@@ -96,7 +95,7 @@ public class proxyFitnessServiceImpl implements FitnessService{
                 break;
         }
         this.Observe(answer);
-        
+
     }
 
     @Override

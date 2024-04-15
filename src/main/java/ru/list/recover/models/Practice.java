@@ -28,14 +28,15 @@ public class Practice {
     private double calories;
     private String description;
 
-    
-    /** 
+    /**
      * переопределен метод toString
+     * 
      * @return String - строковое представление объекта
      */
     @Override
-    public String toString(){
-        return String.format("%d %s %s %s минут", this.getId(), this.getDate().toLocalDate().toString(), this.getWorkout().getName(), this.getAmount());
+    public String toString() {
+        return String.format("%d %s %s %s минут", this.getId(), this.getDate().toLocalDate().toString(),
+                this.getWorkout().getName(), this.getAmount());
     }
 
 }

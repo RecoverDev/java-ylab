@@ -1,7 +1,6 @@
 package ru.list.recover.services;
 
 import ru.list.recover.storages.PracticeRepository;
-import ru.list.recover.storages.PracticeRepositoryImpl;
 import ru.list.recover.storages.UserRepository;
 import ru.list.recover.storages.WorkoutRepository;
 
@@ -16,37 +15,42 @@ public interface AdminService extends Service {
 
     /**
      * возвращает список посещений пользователей
+     * 
      * @return объект класса PracticeRepository
      */
-   PracticeRepository getPracticeRepository();
+    PracticeRepository getPracticeRepository();
 
     /**
      * определяет в классе список посещений пользователей
+     * 
      * @param practiceRepository объект класса PracticeRepository
      */
     void setPracticeRepository(PracticeRepository practiceRepository);
 
-
     /**
      * возвращает хранилище списка возможных вариантов тренировок
+     * 
      * @return объект класса WorkoutRepository
      */
     WorkoutRepository getWorkoutRepository();
 
     /**
      * определяет в классе список возможных вариантов тренировок
+     * 
      * @param workoutRepository объект класса WorkoutRepository
      */
     void setWorkoutRepository(WorkoutRepository workoutRepository);
 
     /**
      * возвращает хранилище списка пользователей программы
+     * 
      * @return хранилище списка пользователей
      */
     UserRepository getUserRepository();
 
     /**
      * определяет в классе хранилище списка пользователей
+     * 
      * @param userRepository - Repository пользователей (класс User)
      */
     void setUserRepository(UserRepository userRepository);
@@ -61,7 +65,7 @@ public interface AdminService extends Service {
      */
     void showWorkouts();
 
-/**
+    /**
      * выводит список проведенных тренировок
      */
     void showPractices();
@@ -70,6 +74,5 @@ public interface AdminService extends Service {
      * выводит содержимое журнала
      */
     void showLog();
-
 
 }
