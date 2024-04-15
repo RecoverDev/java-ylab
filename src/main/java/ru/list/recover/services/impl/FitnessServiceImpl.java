@@ -22,27 +22,9 @@ public class FitnessServiceImpl implements FitnessService {
     private PracticeRepository repository;
     private WorkoutRepository workouts;
 
-    /**
-     * @return WorkoutRepository
-     */
-    @Override
-    public WorkoutRepository getWorkoutRepository() {
-        return workouts;
-    }
-
-    @Override
-    public void setWorkoutRepository(WorkoutRepository workoutRepository) {
+    public FitnessServiceImpl(PracticeRepository practiceRepository, WorkoutRepository workoutRepository) {
+        this.repository = practiceRepository;
         this.workouts = workoutRepository;
-    }
-
-    @Override
-    public void setRepository(PracticeRepository repository) {
-        this.repository = repository;
-    }
-
-    @Override
-    public PracticeRepository getRepository() {
-        return this.repository;
     }
 
     @Override

@@ -8,6 +8,10 @@ import ru.list.recover.models.Practice;
 import ru.list.recover.models.TypeWorkout;
 import ru.list.recover.models.User;
 import ru.list.recover.models.Workout;
+import ru.list.recover.services.impl.AdminServiceImpl;
+import ru.list.recover.services.impl.FitnessServiceImpl;
+import ru.list.recover.services.impl.MainServiceImpl;
+import ru.list.recover.services.impl.UserServiceImpl;
 import ru.list.recover.storages.PracticeRepository;
 import ru.list.recover.storages.TypeWorkoutRepository;
 import ru.list.recover.storages.UserRepository;
@@ -44,18 +48,17 @@ public class Container implements IObserve {
         typeWorkoutRepository = new TypeWorkoutRepositoryImpl();
         workoutRepository = new WorkoutRepositoryImpl();
 
-        userService = Services.FabricUserService(this);
-        userService.setRepository(userRepository);
-        mainService = Services.FabricMainService(this);
+        userService =  new UserServiceImpl(userRepository);
+        userService.addListener(this);
 
-        fitnessService = Services.FabricFitnessService(this);
-        fitnessService.setRepository(practiceRepository);
-        fitnessService.setWorkoutRepository(workoutRepository);
+        mainService = new MainServiceImpl();
+        mainService.addListener(this); 
 
-        adminService = Services.FabricAdminService(this);
-        adminService.setUserRepository(userRepository);
-        adminService.setWorkoutRepository(workoutRepository);
-        adminService.setPracticeRepository(practiceRepository);
+        fitnessService = new FitnessServiceImpl(practiceRepository, workoutRepository);
+        fitnessService.addListener(adminService); 
+
+        adminService = new AdminServiceImpl(userRepository, workoutRepository, practiceRepository);
+        adminService.addListener(this);
 
         loger = Logger.getInstance();
 

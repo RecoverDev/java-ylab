@@ -25,58 +25,10 @@ public class AdminServiceImpl implements AdminService {
     private WorkoutRepository workoutRepository;
     private PracticeRepository practiceRepository;
 
-    /**
-     * возвращает список посещений пользователей
-     * 
-     * @return объект класса PracticeRepository
-     */
-    public PracticeRepository getPracticeRepository() {
-        return practiceRepository;
-    }
-
-    /**
-     * определяет в классе список посещений пользователей
-     * 
-     * @param practiceRepository объект класса PracticeRepository
-     */
-    public void setPracticeRepository(PracticeRepository practiceRepository) {
-        this.practiceRepository = practiceRepository;
-    }
-
-    /**
-     * возвращает хранилище списка возможных вариантов тренировок
-     * 
-     * @return объект класса WorkoutRepository
-     */
-    public WorkoutRepository getWorkoutRepository() {
-        return workoutRepository;
-    }
-
-    /**
-     * определяет в классе список возможных вариантов тренировок
-     * 
-     * @param workoutRepository объект класса WorkoutRepository
-     */
-    public void setWorkoutRepository(WorkoutRepository workoutRepository) {
-        this.workoutRepository = workoutRepository;
-    }
-
-    /**
-     * возвращает хранилище списка пользователей программы
-     * 
-     * @return хранилище списка пользователей
-     */
-    public UserRepository getUserRepository() {
-        return userRepository;
-    }
-
-    /**
-     * определяет в классе хранилище списка пользователей
-     * 
-     * @param userRepository - Repository пользователей (класс User)
-     */
-    public void setUserRepository(UserRepository userRepository) {
+    public AdminServiceImpl(UserRepository userRepository, WorkoutRepository workoutRepository, PracticeRepository practiceRepository) {
         this.userRepository = userRepository;
+        this.workoutRepository = workoutRepository;
+        this.practiceRepository = practiceRepository;
     }
 
     /**
@@ -152,7 +104,7 @@ public class AdminServiceImpl implements AdminService {
      * выводит список пользователей программы
      */
     public void showUsers() {
-        List<User> listUsers = this.getUserRepository().findAll();
+        List<User> listUsers = this.userRepository.findAll();
         List<String> strUsers = new ArrayList<>();
 
         listUsers.forEach(u -> strUsers.add(u.toString()));
