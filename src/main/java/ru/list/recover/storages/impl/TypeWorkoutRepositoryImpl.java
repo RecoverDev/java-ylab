@@ -1,10 +1,11 @@
-package ru.list.recover.storages;
+package ru.list.recover.storages.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import ru.list.recover.models.TypeWorkout;
+import ru.list.recover.storages.TypeWorkoutRepository;
 
 public class TypeWorkoutRepositoryImpl implements TypeWorkoutRepository {
 

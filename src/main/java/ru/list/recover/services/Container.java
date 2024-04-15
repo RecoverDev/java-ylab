@@ -9,13 +9,13 @@ import ru.list.recover.models.TypeWorkout;
 import ru.list.recover.models.User;
 import ru.list.recover.models.Workout;
 import ru.list.recover.storages.PracticeRepository;
-import ru.list.recover.storages.PracticeRepositoryImpl;
 import ru.list.recover.storages.TypeWorkoutRepository;
-import ru.list.recover.storages.TypeWorkoutRepositoryImpl;
 import ru.list.recover.storages.UserRepository;
-import ru.list.recover.storages.UserRepositoryImpl;
 import ru.list.recover.storages.WorkoutRepository;
-import ru.list.recover.storages.WorkoutRepositoryImpl;
+import ru.list.recover.storages.impl.PracticeRepositoryImpl;
+import ru.list.recover.storages.impl.TypeWorkoutRepositoryImpl;
+import ru.list.recover.storages.impl.UserRepositoryImpl;
+import ru.list.recover.storages.impl.WorkoutRepositoryImpl;
 
 /**
  * класс создает и управляет вызовами сервисов и хранилищ,

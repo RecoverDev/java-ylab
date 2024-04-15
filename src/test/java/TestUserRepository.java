@@ -3,7 +3,7 @@ import org.junit.jupiter.api.Test;
 
 import ru.list.recover.models.User;
 import ru.list.recover.storages.Repository;
-import ru.list.recover.storages.UserRepositoryImpl;
+import ru.list.recover.storages.impl.UserRepositoryImpl;
 
 public class TestUserRepository {
 

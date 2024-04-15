@@ -1,5 +1,10 @@
 package ru.list.recover.services;
 
+import ru.list.recover.services.impl.AdminServiceImpl;
+import ru.list.recover.services.impl.MainServiceImpl;
+import ru.list.recover.services.impl.UserServiceImpl;
+import ru.list.recover.services.impl.proxyFitnessServiceImpl;
+
 /**
  * класс реализует фабричные методы дляполучения сервисов
  */

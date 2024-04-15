@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 import ru.list.recover.models.Practice;
 import ru.list.recover.models.User;
 import ru.list.recover.models.Workout;
-import ru.list.recover.storages.PracticeRepositoryImpl;
+import ru.list.recover.storages.impl.PracticeRepositoryImpl;
 
 public class TestPracticeRepository {
 

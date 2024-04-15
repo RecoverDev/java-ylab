@@ -1,10 +1,12 @@
-package ru.list.recover.services;
+package ru.list.recover.services.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import ru.list.recover.models.User;
 import ru.list.recover.out.MainView;
+import ru.list.recover.services.IObserve;
+import ru.list.recover.services.MainService;
 
 public class MainServiceImpl implements MainService {
     private User user = null;

@@ -2,8 +2,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import ru.list.recover.models.User;
-import ru.list.recover.services.UserServiceImpl;
-import ru.list.recover.storages.UserRepositoryImpl;
+import ru.list.recover.services.impl.UserServiceImpl;
+import ru.list.recover.storages.impl.UserRepositoryImpl;
 
 public class testUserService {
 

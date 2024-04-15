@@ -1,10 +1,11 @@
-package ru.list.recover.storages;
+package ru.list.recover.storages.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import ru.list.recover.models.User;
+import ru.list.recover.storages.UserRepository;
 
 public class UserRepositoryImpl implements UserRepository {
 

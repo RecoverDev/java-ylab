@@ -3,7 +3,7 @@ import org.junit.jupiter.api.Test;
 
 import ru.list.recover.models.TypeWorkout;
 import ru.list.recover.storages.TypeWorkoutRepository;
-import ru.list.recover.storages.TypeWorkoutRepositoryImpl;
+import ru.list.recover.storages.impl.TypeWorkoutRepositoryImpl;
 
 public class TestTypeWorkoutRepository {
 

@@ -1,9 +1,11 @@
-package ru.list.recover.services;
+package ru.list.recover.services.impl;
 
 import ru.list.recover.in.Response;
 import ru.list.recover.logger.Logger;
 import ru.list.recover.models.User;
 import ru.list.recover.out.FitnessView;
+import ru.list.recover.services.FitnessService;
+import ru.list.recover.services.IObserve;
 import ru.list.recover.storages.PracticeRepository;
 import ru.list.recover.storages.WorkoutRepository;
 

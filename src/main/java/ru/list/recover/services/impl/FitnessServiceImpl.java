@@ -1,4 +1,4 @@
-package ru.list.recover.services;
+package ru.list.recover.services.impl;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -11,6 +11,8 @@ import ru.list.recover.models.TypeWorkout;
 import ru.list.recover.models.User;
 import ru.list.recover.models.Workout;
 import ru.list.recover.out.FitnessView;
+import ru.list.recover.services.FitnessService;
+import ru.list.recover.services.IObserve;
 import ru.list.recover.storages.PracticeRepository;
 import ru.list.recover.storages.WorkoutRepository;
 

@@ -1,4 +1,4 @@
-package ru.list.recover.services;
+package ru.list.recover.services.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,6 +6,8 @@ import java.util.List;
 import ru.list.recover.in.Response;
 import ru.list.recover.models.User;
 import ru.list.recover.out.UserView;
+import ru.list.recover.services.IObserve;
+import ru.list.recover.services.UserService;
 import ru.list.recover.storages.UserRepository;
 
 public class UserServiceImpl implements UserService {
