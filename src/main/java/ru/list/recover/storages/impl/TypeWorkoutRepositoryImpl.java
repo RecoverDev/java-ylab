@@ -2,7 +2,6 @@ package ru.list.recover.storages.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import ru.list.recover.models.TypeWorkout;
