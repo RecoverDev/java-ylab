@@ -3,13 +3,14 @@ package ru.list.recover.storages.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import ru.list.recover.models.Workout;
 import ru.list.recover.storages.WorkoutRepository;
 
 public class WorkoutRepositoryImpl implements WorkoutRepository {
 
-    private List<Workout> workouts = new ArrayList<>();
+    private final List<Workout> workouts = new ArrayList<>();
 
     /**
      * @param object
@@ -18,9 +19,8 @@ public class WorkoutRepositoryImpl implements WorkoutRepository {
     @Override
     public boolean insert(Workout object) {
         object.setId(Math.max(object.getId(), 1));
-        if (workouts.stream().filter(u -> u.getId() == object.getId()).count() > 0) {
-            int id = workouts.stream().map(u -> u.getId()).max((x, y) -> x.compareTo(y)).get() + 1;
-            object.setId(id);
+        while (this.findById(object.getId()) != null) {
+            object.setId(object.getId() + 1);
         }
 
         return workouts.add(object);
@@ -34,8 +34,11 @@ public class WorkoutRepositoryImpl implements WorkoutRepository {
 
     @Override
     public Workout findById(int id) {
-        Optional<Workout> result = workouts.stream().filter(u -> u.getId() == id).findFirst();
-        return result.isPresent() ? result.get() : null;
+        List<Workout> list = workouts.stream().filter(u -> u.getId() == id).collect(Collectors.toList());
+        if (list.size() > 0) {
+            return list.get(0);
+        }
+        return null;
     }
 
     @Override

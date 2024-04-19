@@ -9,19 +9,10 @@ import java.util.List;
  * реализован шаблон Синглтон
  */
 public class Logger {
-    private static final Logger instance = new Logger();
     private List<Record> log;
 
-    private Logger() {
+    public Logger() {
         log = new ArrayList<>();
-    }
-
-    /**
-     * получаем экземпляр класса
-     * @return экземпляр класса Logger
-     */
-    public static Logger getInstance() {
-        return instance;
     }
 
     /**

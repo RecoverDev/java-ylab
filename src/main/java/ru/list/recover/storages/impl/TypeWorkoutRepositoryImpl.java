@@ -3,13 +3,14 @@ package ru.list.recover.storages.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import ru.list.recover.models.TypeWorkout;
 import ru.list.recover.storages.TypeWorkoutRepository;
 
 public class TypeWorkoutRepositoryImpl implements TypeWorkoutRepository {
 
-    private List<TypeWorkout> typeWorkouts = new ArrayList<>();
+    private final List<TypeWorkout> typeWorkouts = new ArrayList<>();
 
     /**
      * @param object
@@ -18,10 +19,10 @@ public class TypeWorkoutRepositoryImpl implements TypeWorkoutRepository {
     @Override
     public boolean insert(TypeWorkout object) {
         object.setId(Math.max(object.getId(), 1));
-        if (typeWorkouts.stream().filter(u -> u.getId() == object.getId()).count() > 0) {
-            int id = typeWorkouts.stream().map(u -> u.getId()).max((x, y) -> x.compareTo(y)).get() + 1;
-            object.setId(id);
+        while (this.findById(object.getId()) != null) {
+            object.setId(object.getId() + 1);
         }
+
         return typeWorkouts.add(object);
     }
 
@@ -43,8 +44,11 @@ public class TypeWorkoutRepositoryImpl implements TypeWorkoutRepository {
 
     @Override
     public TypeWorkout findById(int id) {
-        Optional<TypeWorkout> result = typeWorkouts.stream().filter(u -> u.getId() == id).findFirst();
-        return result.isPresent() ? result.get() : null;
+        List<TypeWorkout> list = typeWorkouts.stream().filter(u -> u.getId() == id).collect(Collectors.toList());
+        if (list.size() > 0) {
+            return list.get(0);
+        }
+        return null;
     }
 
     @Override

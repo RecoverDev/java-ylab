@@ -2,10 +2,12 @@ package ru.list.recover.services.impl;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import ru.list.recover.in.Response;
+import ru.list.recover.logger.Logger;
 import ru.list.recover.models.Practice;
 import ru.list.recover.models.TypeWorkout;
 import ru.list.recover.models.User;
@@ -16,15 +18,22 @@ import ru.list.recover.services.IObserve;
 import ru.list.recover.storages.PracticeRepository;
 import ru.list.recover.storages.WorkoutRepository;
 
+/**
+ * класс реализует функционал работы пользователя (спортсмена)
+ */
 public class FitnessServiceImpl implements FitnessService {
     private User user;
+    private Logger logger;
     private List<IObserve> listeners = new ArrayList<>();
     private PracticeRepository repository;
     private WorkoutRepository workouts;
+    private Response response;
 
-    public FitnessServiceImpl(PracticeRepository practiceRepository, WorkoutRepository workoutRepository) {
+    public FitnessServiceImpl(PracticeRepository practiceRepository, WorkoutRepository workoutRepository, Response response, Logger logger) {
         this.repository = practiceRepository;
         this.workouts = workoutRepository;
+        this.response = response;
+        this.logger = logger;
     }
 
     @Override
@@ -49,26 +58,31 @@ public class FitnessServiceImpl implements FitnessService {
         }
     }
 
+    /**
+     * выводит меню выбора возможных действия для пользователя
+     */
     public void showMenu() {
         FitnessView.showMenu();
-        int answer = Response.getInt("Выберите режим работы: ");
+        int answer = response.getInt("Выберите режим работы: ");
 
         switch (answer) {
             // добавить тренировку
             case 1:
-                this.addPractice();
+                logger.addRecord("Добавление тренировки", this.addPractice());
                 break;
             // удалить тренировку
             case 2:
-                this.deletePractice();
+                logger.addRecord("Удаление тренировки", this.deletePractice());
                 break;
             // редактировать тренировку
             case 3:
-                this.editPractice();
+                logger.addRecord("Редактирование тренировки", this.editPractice());
                 break;
             // посмотреть тренировки
             case 4:
                 this.showPractices();
+                logger.addRecord("Просмотр списка тренировок", true);
+                break;
                 // статистика
             case 5:
                 this.statistic();
@@ -86,6 +100,8 @@ public class FitnessServiceImpl implements FitnessService {
 
     /**
      * добавляет новую тренировку в журнал спортсмену
+     * 
+     * @return true - если тренировка успешно добавлена, иначе - false
      */
     public boolean addPractice() {
         int value = 0;
@@ -99,7 +115,7 @@ public class FitnessServiceImpl implements FitnessService {
 
         FitnessView.showMessage("Выверите тренировку из списка:");
         FitnessView.showWorkouts(strWorkouts);
-        value = Response.getInt("Введите номер тренировки: (1 - " + workouts.getCount() + "): ");
+        value = response.getInt("Введите номер тренировки: (1 - " + workouts.getCount() + "): ");
 
         Workout workout = workouts.findById(value);
         if (workout == null) {
@@ -113,26 +129,58 @@ public class FitnessServiceImpl implements FitnessService {
         }
         practice.setWorkout(workout);
 
-        LocalDate date = Response.getDate("Введите дату тренировки в формате ГГГГ-ММ-ДД: ");
-        practice.setDate(LocalDateTime.of(date, null));
+        LocalDate date = response.getDate("Введите дату тренировки в формате ГГГГ-ММ-ДД: ");
+        if (date == null) {
+            FitnessView.showMessage("Не корректное значение даты");
+            return false;
+        }
 
-        value = Response.getInt("Введите количество повторений: ");
-        practice.setCountExercise(Math.max(value, 0));
+        LocalTime time = response.getTime("Введите время начала тренировки в формате ЧЧ:ММ:СС: ");
+        if (time == null) {
+            FitnessView.showMessage("Не корректное значение времени");
+            return false;
+        }
+        practice.setDate(LocalDateTime.of(date, time));
 
-        value = Response.getInt("Введите длительность тренировки (минуты): ");
-        practice.setAmount(Math.max(value, 0));
+        value = response.getInt("Введите количество повторений: ");
+        if (value < 1) {
+            FitnessView.showMessage("Не корректное значение количества повторений (" +  value + ")");
+            return false;
+        }
+        practice.setCountExercise(value);
 
-        value = Response.getInt("Введите количесто потраченных калорий: ");
-        practice.setCalories(Math.max(value, 0));
+        value = response.getInt("Введите длительность тренировки (минуты): ");
+        if (value < 1) {
+            FitnessView.showMessage("Не корректное значение продолжительности тренировки (" +  value + ")");
+            return false;
+        }
+        practice.setAmount(value);
 
-        String desc = Response.getSrting("Введите дополнительные параметры: ");
+        value = response.getInt("Введите количесто потраченных калорий: ");
+        if (value < 1) {
+            FitnessView.showMessage("Не корректное значение количества потраченных калорий (" +  value + ")");
+            return false;
+        }
+        practice.setCalories(value);
+
+        String desc = response.getSrting("Введите дополнительные параметры: ");
         practice.setDescription(desc);
 
-        return repository.insert(practice);
+        boolean result = repository.insert(practice);
+        if (result) {
+            FitnessView.showMessage("Тренировка успешно добавлена");
+        } else {
+            FitnessView.showMessage("Тренировка не добавлена");
+        }
+        response.getSrting("Нажмите ENTER ...");
+
+        return result;
     }
 
     /**
      * удаляет выбранную тренировку пользователя
+     * 
+     * @return true - если тренировка успешно удалена, иначе - false
      */
     public boolean deletePractice() {
         List<Practice> practices = getPracticeByUser();
@@ -142,7 +190,7 @@ public class FitnessServiceImpl implements FitnessService {
 
         FitnessView.showMessage("Выберите тренировку из списка:");
         FitnessView.showPractices(strPractices);
-        int value = Response.getInt("Введите номер удаляемой тренировки(1 - " + practices.size() + "): ");
+        int value = response.getInt("Введите номер удаляемой тренировки(1 - " + practices.size() + "): ");
         Practice practice = repository.findById(value);
 
         if (practice == null) {
@@ -163,7 +211,7 @@ public class FitnessServiceImpl implements FitnessService {
 
         FitnessView.showMessage("Выберите тренировку для редактирования из списка:");
         FitnessView.showPractices(strPractices);
-        int value = Response.getInt("Введите номер редактируемой тренировки(1 - " + practices.size() + "): ");
+        int value = response.getInt("Введите номер редактируемой тренировки(1 - " + practices.size() + "): ");
         Practice practice = repository.findById(value);
 
         if (practice == null) {
@@ -174,16 +222,28 @@ public class FitnessServiceImpl implements FitnessService {
         FitnessView.showMessage("Редактируется тренировка:");
         FitnessView.showMessage(practice.toString());
 
-        value = Response.getInt("Введите количество повторений (было - " + practice.getCountExercise() + "): ");
-        practice.setCountExercise(Math.max(value, 0));
+        value = response.getInt("Введите количество повторений (было - " + practice.getCountExercise() + "): ");
+        if (value < 1) {
+            FitnessView.showMessage("Не корректное значение количества повторений (" +  value + ")");
+            return false;
+        }
+        practice.setCountExercise(value);
 
-        value = Response.getInt("Введите длительность тренировки (минуты) (было - " + practice.getAmount() + "): ");
-        practice.setAmount(Math.max(value, 0));
+        value = response.getInt("Введите длительность тренировки (минуты) (было - " + practice.getAmount() + "): ");
+        if (value < 1) {
+            FitnessView.showMessage("Не корректное значение продолжительности тренировки (" +  value + ")");
+            return false;
+        }
+        practice.setAmount(value);
 
-        value = Response.getInt("Введите количесто потраченных калорий (было - " + practice.getCalories() + "): ");
-        practice.setCalories(Math.max(value, 0));
+        value = response.getInt("Введите количесто потраченных калорий (было - " + practice.getCalories() + "): ");
+        if (value < 1) {
+            FitnessView.showMessage("Не корректное значение количества потраченных калорий (" +  value + ")");
+            return false;
+        }
+        practice.setCalories(value);
 
-        String desc = Response.getSrting("Введите дополнительные параметры: ");
+        String desc = response.getSrting("Введите дополнительные параметры: ");
         practice.setDescription(desc);
 
         repository.update(practice);
@@ -201,7 +261,7 @@ public class FitnessServiceImpl implements FitnessService {
 
         FitnessView.showMessage("Список пройденных тренировок:");
         FitnessView.showPractices(strPractices);
-        Response.getSrting("Для завершения просмотра нажмите ENTER ...");
+        response.getSrting("Для завершения просмотра нажмите ENTER ...");
     }
 
     /**
@@ -209,13 +269,15 @@ public class FitnessServiceImpl implements FitnessService {
      */
     public void statistic() {
         FitnessView.showMenuStatistic();
-        int answer = Response.getInt("Введите номер варианта статистики: ");
+        int answer = response.getInt("Введите номер варианта статистики: ");
         switch (answer) {
             case 1:
                 this.timeStatistic();
+                logger.addRecord("Просмотр статистики по использованию времени", true);
                 break;
             case 2:
                 this.caloriesStatistic();
+                logger.addRecord("Просмотр статистики по соженным калориям", true);
                 break;
             default:
                 break;
@@ -228,8 +290,8 @@ public class FitnessServiceImpl implements FitnessService {
      * за выбранный период
      */
     public void timeStatistic() {
-        LocalDate date1 = Response.getDate("Введите начало периода в формате ГГГГ-ММ-ДД: ");
-        LocalDate date2 = Response.getDate("Введите окончание периода в формате ГГГГ-ММ-ДД: ");
+        LocalDate date1 = response.getDate("Введите начало периода в формате ГГГГ-ММ-ДД: ");
+        LocalDate date2 = response.getDate("Введите окончание периода в формате ГГГГ-ММ-ДД: ");
         List<Practice> list = this.getPracticeByUser();
         int fullTime = list.stream()
                 .filter(p -> (p.getDate().toLocalDate().compareTo(date1) >= 0
@@ -237,7 +299,7 @@ public class FitnessServiceImpl implements FitnessService {
                 .mapToInt(p -> p.getAmount()).sum();
 
         FitnessView.showMessage("Общая продолжительность тренировок за выбранный период: " + fullTime);
-        Response.getSrting("Для завершения просмотра нажмите ENTER ...");
+        response.getSrting("Для завершения просмотра нажмите ENTER ...");
 
     }
 
@@ -246,8 +308,8 @@ public class FitnessServiceImpl implements FitnessService {
      * выбранный период
      */
     public void caloriesStatistic() {
-        LocalDate date1 = Response.getDate("Введите начало периода в формате ГГГГ-ММ-ДД: ");
-        LocalDate date2 = Response.getDate("Введите окончание периода в формате ГГГГ-ММ-ДД: ");
+        LocalDate date1 = response.getDate("Введите начало периода в формате ГГГГ-ММ-ДД: ");
+        LocalDate date2 = response.getDate("Введите окончание периода в формате ГГГГ-ММ-ДД: ");
         List<Practice> list = this.getPracticeByUser();
         double fullCalories = list.stream()
                 .filter(p -> (p.getDate().toLocalDate().compareTo(date1) >= 0
@@ -255,7 +317,7 @@ public class FitnessServiceImpl implements FitnessService {
                 .mapToDouble(p -> p.getCalories()).sum();
 
         FitnessView.showMessage("Количество соженных калорий за выбранный период: " + fullCalories);
-        Response.getSrting("Для завершения просмотра нажмите ENTER ...");
+        response.getSrting("Для завершения просмотра нажмите ENTER ...");
 
     }
 

@@ -1,21 +1,24 @@
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import ru.list.recover.models.TypeWorkout;
 import ru.list.recover.storages.TypeWorkoutRepository;
 import ru.list.recover.storages.impl.TypeWorkoutRepositoryImpl;
 
-public class TestTypeWorkoutRepository {
+public class TypeWorkoutRepositoryTest {
 
     @Test
-    public void testInsert() {
+    @DisplayName("Добавление записи")
+    public void InsertTest() {
         TypeWorkoutRepository repository = new TypeWorkoutRepositoryImpl();
 
         Assertions.assertTrue(repository.insert(new TypeWorkout(1, "Силовая")));
     }
 
     @Test
-    public void testIncrementID() {
+    @DisplayName("Проверка обработки неверного ID")
+    public void IncrementIDTest() {
         TypeWorkoutRepository repository = new TypeWorkoutRepositoryImpl();
 
         repository.insert(new TypeWorkout(0, "Силовая"));
@@ -25,7 +28,8 @@ public class TestTypeWorkoutRepository {
     }
 
     @Test
-    public void testDelete() {
+    @DisplayName("Удаление элемента")
+    public void DeleteTest() {
         TypeWorkoutRepository repository = new TypeWorkoutRepositoryImpl();
 
         TypeWorkout typeWorkout = new TypeWorkout(1, "Пробная");
@@ -41,7 +45,8 @@ public class TestTypeWorkoutRepository {
     }
 
     @Test
-    public void testFindById() {
+    @DisplayName("поиск элемента по ID")
+    public void FindByIdTest() {
         TypeWorkoutRepository repository = new TypeWorkoutRepositoryImpl();
 
         TypeWorkout typeWorkout = new TypeWorkout(1, "Пробная");
@@ -57,7 +62,8 @@ public class TestTypeWorkoutRepository {
     }
 
     @Test
-    public void testCount() {
+    @DisplayName("возвращает количество элементов в хранилище")
+    public void CountTest() {
         TypeWorkoutRepository repository = new TypeWorkoutRepositoryImpl();
 
         repository.insert(new TypeWorkout(1, "Силовая"));

@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.list.recover.in.Response;
+import ru.list.recover.in.views.AdminView;
 import ru.list.recover.logger.Logger;
 import ru.list.recover.models.Practice;
 import ru.list.recover.models.User;
 import ru.list.recover.models.Workout;
-import ru.list.recover.out.AdminView;
 import ru.list.recover.services.AdminService;
 import ru.list.recover.services.IObserve;
 import ru.list.recover.storages.PracticeRepository;
@@ -20,15 +20,19 @@ import ru.list.recover.storages.WorkoutRepository;
  */
 public class AdminServiceImpl implements AdminService {
     private User user;
+    private Logger log;
     private List<IObserve> listeners = new ArrayList<>();
     private UserRepository userRepository;
     private WorkoutRepository workoutRepository;
     private PracticeRepository practiceRepository;
+    private Response response;
 
-    public AdminServiceImpl(UserRepository userRepository, WorkoutRepository workoutRepository, PracticeRepository practiceRepository) {
+    public AdminServiceImpl(UserRepository userRepository, WorkoutRepository workoutRepository, PracticeRepository practiceRepository, Response response, Logger logger) {
         this.userRepository = userRepository;
         this.workoutRepository = workoutRepository;
         this.practiceRepository = practiceRepository;
+        this.response = response;
+        this.log = logger;
     }
 
     /**
@@ -70,24 +74,24 @@ public class AdminServiceImpl implements AdminService {
      */
     public void showMenu() {
         AdminView.showMenu();
-        int answer = Response.getInt("Введите номер пункта меню: ");
+        int answer = response.getInt("Введите номер пункта меню: ");
 
         switch (answer) {
             // список пользователей
             case 1:
-                this.showUsers();
+                this.showList(this.getListUsers());
                 break;
             // список доступных тренировок
             case 2:
-                this.showWorkouts();
+                this.showList(this.getListWorkouts());
                 break;
             // посещения пользователей
             case 3:
-                this.showPractices();
+                this.showList(this.getListPractices());
                 break;
             // просмотр журнала
             case 4:
-                this.showLog();
+                this.showList(this.getListLog());
                 break;
             case 5:
                 this.Observe(null);
@@ -101,35 +105,35 @@ public class AdminServiceImpl implements AdminService {
     }
 
     /**
-     * выводит список пользователей программы
+     * формирует список пользователей программы
      */
-    public void showUsers() {
+    public List<String> getListUsers() {
         List<User> listUsers = this.userRepository.findAll();
         List<String> strUsers = new ArrayList<>();
 
         listUsers.forEach(u -> strUsers.add(u.toString()));
 
-        AdminView.showList(strUsers);
-        Response.getSrting("Для завершения просмотра нажмите ENTER ...");
+        return strUsers;
+
     }
 
     /**
-     * выводит список доступных вариантов тренировок
+     * формирует список доступных вариантов тренировок
      */
-    public void showWorkouts() {
+    public List<String> getListWorkouts() {
         List<Workout> listWorkouts = workoutRepository.findAll();
         List<String> strWorkouts = new ArrayList<>();
 
         listWorkouts.forEach(w -> strWorkouts.add(w.toString()));
 
-        AdminView.showList(strWorkouts);
-        Response.getSrting("Для завершения просмотра нажмите ENTER ...");
+        return strWorkouts;
+
     }
 
     /**
-     * выводит список проведенных тренировок
+     * формирует список проведенных тренировок
      */
-    public void showPractices() {
+    public List<String> getListPractices() {
         List<Practice> listPractices = practiceRepository.findAll();
         List<String> strPractice = new ArrayList<>();
         for (Practice p : listPractices) {
@@ -137,20 +141,23 @@ public class AdminServiceImpl implements AdminService {
                     p.getWorkout().getName(), p.getWorkout().getType().getName(), p.getAmount());
             strPractice.add(descPractice);
         }
-        AdminView.showList(strPractice);
-        Response.getSrting("Для завершения просмотра нажмите ENTER ...");
+
+        return strPractice;
     }
 
     /**
-     * выводит содержимое журнала
+     * формирует список записей содержимого журнала
      */
-    public void showLog() {
-        Logger log = Logger.getInstance();
-
+    public List<String> getListLog() {
         List<String> strLog = new ArrayList<>();
         log.getLog().forEach(r -> strLog.add(r.toString()));
-        AdminView.showList(strLog);
-        Response.getSrting("Для завершения просмотра нажмите ENTER ...");
+
+        return strLog;
+    }
+
+    private void showList(List<String> list) {
+        AdminView.showList(list);
+        response.getSrting("Для завершения просмотра нажмите ENTER ...");
     }
 
 }

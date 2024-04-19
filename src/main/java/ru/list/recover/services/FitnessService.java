@@ -24,13 +24,30 @@ public interface FitnessService extends Service {
      */
     boolean deletePractice();
 
+    /**
+     * редактирует тренировку из списка тренировок пользователя
+     * 
+     * @return результат редактирования (true - успешно)
+     */
     boolean editPractice();
 
+    /**
+     * показывает список тренировок, проведенных пользователем
+     */
     void showPractices();
 
+    /**
+     * показывает меню стстистик, доступных для формирования пользователем
+     */
     void statistic();
 
+    /**
+     * вывод статитстики по затраченному времени
+     */
     void timeStatistic();
 
+    /**
+     * вывод статистики по соженным калориям
+     */
     void caloriesStatistic();
 }

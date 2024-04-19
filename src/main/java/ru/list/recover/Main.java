@@ -1,7 +1,5 @@
 package ru.list.recover;
 
-import ru.list.recover.services.Container;
-
 public class Main {
 
     /**

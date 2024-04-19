@@ -1,4 +1,4 @@
-package ru.list.recover.out;
+package ru.list.recover.in.views;
 
 import static java.lang.System.out;
 

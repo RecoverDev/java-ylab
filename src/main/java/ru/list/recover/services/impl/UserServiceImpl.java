@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.list.recover.in.Response;
+import ru.list.recover.logger.Logger;
 import ru.list.recover.models.User;
 import ru.list.recover.out.UserView;
 import ru.list.recover.services.IObserve;
@@ -13,10 +14,14 @@ import ru.list.recover.storages.UserRepository;
 public class UserServiceImpl implements UserService {
     private UserRepository repository;
     private User user = null;
+    private Logger logger;
     private List<IObserve> listeners = new ArrayList<>();
+    private Response response;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, Response response, Logger logger) {
         this.repository = userRepository;
+        this.response = response;
+        this.logger = logger;
     }
 
     @Override
@@ -35,17 +40,20 @@ public class UserServiceImpl implements UserService {
         int answer = 0;
 
         UserView.autorizationMenu();
-        answer = Response.getInt("Введите число (1 или 2): ");
+        answer = response.getInt("Введите число (1 или 2): ");
 
         switch (answer) {
             case 1:
                 result = this.login();
+                logger.addRecord("авторизация пользователя", result != null);
                 break;
             case 2:
                 User user = this.registration();
+                boolean addUser = false;
                 if (user != null) {
-                    repository.insert(user);
+                    addUser = repository.insert(user);
                 }
+                logger.addRecord("Регистрация пользователя", addUser);
             default:
                 break;
         }
@@ -57,8 +65,8 @@ public class UserServiceImpl implements UserService {
     public User login() {
         User result = null;
 
-        String name = Response.getSrting("Введите логин: ");
-        String pass = Response.getSrting("Введите пароль: ");
+        String name = response.getSrting("Введите логин: ");
+        String pass = response.getSrting("Введите пароль: ");
 
         User searchUser = repository.findByLogin(name);
         if (searchUser != null) {
@@ -78,26 +86,22 @@ public class UserServiceImpl implements UserService {
         User result = new User(1, "", "", "", 0);
         String value = "";
 
-        value = Response.getSrting("Введите имя: ");
-        if (repository.findByName(value) == null) {
-            result.setName(value);
-        } else {
-            UserView.sayMessage("Пользователь с таким именем существует");
-            return null;
-        }
-        value = Response.getSrting("Введите логин: ");
+        value = response.getSrting("Введите имя: ");
+        result.setName(value);
+        
+        value = response.getSrting("Введите логин: ");
         if (repository.findByLogin(value) == null) {
             result.setLogin(value);
         } else {
             UserView.sayMessage("Пользователь с таким логином существует");
             return null;
         }
-        value = Response.getSrting("Введите пароль: ");
+        value = response.getSrting("Введите пароль: ");
         result.setPassword(value);
 
         if (user != null) {
             if (user.getRole() == 1) {
-                int role = Response.getInt("Введите роль пользователя (0 - спортсмен, 1 - администратор)");
+                int role = response.getInt("Введите роль пользователя (0 - спортсмен, 1 - администратор)");
                 if (role >= 0) {
                     result.setRole(role);
                 }

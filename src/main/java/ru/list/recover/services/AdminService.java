@@ -1,5 +1,7 @@
 package ru.list.recover.services;
 
+import java.util.List;
+
 /**
  * интерфейс описывающий работу с AdminService (работа администратора)
  */
@@ -11,23 +13,23 @@ public interface AdminService extends Service {
 
 
     /**
-     * выводит список пользователей программы
+     * формирует список пользователей программы
      */
-    void showUsers();
+    List<String> getListUsers();
 
     /**
-     * выводит список доступных вариантов тренировок
+     * формирует список доступных вариантов тренировок
      */
-    void showWorkouts();
+    List<String> getListWorkouts();
 
     /**
-     * выводит список проведенных тренировок
+     * формирует список проведенных тренировок
      */
-    void showPractices();
+    List<String> getListPractices();
 
     /**
-     * выводит содержимое журнала
+     * формирует список записей содержимого журнала
      */
-    void showLog();
+    List<String> getListLog();
 
 }

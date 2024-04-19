@@ -4,6 +4,7 @@ import java.util.Scanner;
 import static java.lang.System.out;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 /**
  * класс содержит медоты получающие информацию от пользователя
@@ -16,7 +17,7 @@ public class Response {
      * @param message - поясняющее сообщение, выводимое пользователю
      * @return строку введенную пользователем
      */
-    public static String getSrting(String message) {
+    public String getSrting(String message) {
         String result = "";
         out.print(message);
         if (sc.hasNextLine()) {
@@ -30,7 +31,7 @@ public class Response {
      * @param message - поясняющее сообщение, выводимое пользователю
      * @return число введенное пользователем
      */
-    public static int getInt(String message) {
+    public int getInt(String message) {
         int result = 0;
         out.print(message);
         if (sc.hasNextInt()) {
@@ -47,11 +48,26 @@ public class Response {
      * @param message - поясняющее сообщение
      * @return - дата, введенная пользователем
      */
-    public static LocalDate getDate(String message) {
-        LocalDate result = LocalDate.of(2000, 1, 1);
+    public LocalDate getDate(String message) {
+        LocalDate result = null;
         out.print(message);
         if (sc.hasNextLine()) {
             result = LocalDate.parse(sc.nextLine()) ;
+        }
+        return result;
+    }
+
+    
+    /**
+     * получает от пользователя время
+     * @param message - поясняющее сообщение
+     * @return - время, введенное пользователем
+     */
+    public LocalTime getTime(String message) {
+        LocalTime result = null;
+        out.print(message);
+        if (sc.hasNextLine()) {
+            result = LocalTime.parse(sc.nextLine());
         }
         return result;
     }

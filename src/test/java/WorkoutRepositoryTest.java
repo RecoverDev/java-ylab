@@ -1,4 +1,5 @@
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import ru.list.recover.models.TypeWorkout;
@@ -6,10 +7,11 @@ import ru.list.recover.models.Workout;
 import ru.list.recover.storages.WorkoutRepository;
 import ru.list.recover.storages.impl.WorkoutRepositoryImpl;
 
-public class TestWorkoutRepository {
+public class WorkoutRepositoryTest {
 
     @Test
-    public void testInsert() {
+    @DisplayName("добавление новой записи")
+    public void InsertTest() {
         WorkoutRepository repository = new WorkoutRepositoryImpl();
 
         Workout workout1 = new Workout(1, "Сайкл", new TypeWorkout(1, "Айробная"), 1500);
@@ -18,7 +20,8 @@ public class TestWorkoutRepository {
     }
 
     @Test
-    public void testDelete() {
+    @DisplayName("удаление записи")
+    public void DeleteTest() {
         WorkoutRepository repository = new WorkoutRepositoryImpl();
 
         Workout workout1 = new Workout(1, "Сайкл", new TypeWorkout(1, "Айробная"), 1500);
@@ -32,7 +35,8 @@ public class TestWorkoutRepository {
     }
 
     @Test
-    public void testFindById() {
+    @DisplayName("поиск записи по ID")
+    public void FindByIdTest() {
         WorkoutRepository repository = new WorkoutRepositoryImpl();
 
         Workout workout1 = new Workout(1, "Сайкл", new TypeWorkout(1, "Кардио"), 1500);
@@ -50,7 +54,8 @@ public class TestWorkoutRepository {
     }
 
     @Test
-    public void testCount() {
+    @DisplayName("получение количества записей в хранилище")
+    public void CountTest() {
         WorkoutRepository repository = new WorkoutRepositoryImpl();
 
         Workout workout1 = new Workout(1, "Сайкл", new TypeWorkout(1, "Кардио"), 1500);
@@ -68,7 +73,8 @@ public class TestWorkoutRepository {
     }
 
     @Test
-    public void testUpdate() {
+    @DisplayName("обновление записи")
+    public void UpdateTest() {
         WorkoutRepository repository = new WorkoutRepositoryImpl();
 
         Workout workout1 = new Workout(1, "Сайкл", new TypeWorkout(1, "Кардио"), 1500);

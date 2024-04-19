@@ -3,11 +3,14 @@ package ru.list.recover.services.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import ru.list.recover.in.views.MainView;
 import ru.list.recover.models.User;
-import ru.list.recover.out.MainView;
 import ru.list.recover.services.IObserve;
 import ru.list.recover.services.MainService;
 
+/**
+ * класс реализует функционал 
+ */
 public class MainServiceImpl implements MainService {
     private User user = null;
     private List<IObserve> listeners = new ArrayList<>();
@@ -40,7 +43,7 @@ public class MainServiceImpl implements MainService {
         
     }
 
-    public void title(){
+    public void showTitle(){
         MainView.showTitle();
     }
 

@@ -31,4 +31,30 @@ public class User {
         return String.format("%s - %s", this.getName(), this.getRole() == 0 ? "спортсмен" : "администратор");
     }
 
+    /**
+     * переопределили метод equal
+     * 
+     * @param объект класса User
+     * @return true - объекты равны, иначе - false
+     */
+    @Override
+    public boolean equals(Object arg0) {
+        if (arg0 instanceof User user) {
+            if (this.getLogin().equals(user.getLogin())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * переопределили метод hashCode
+     * 
+     * @return - возвращает hashCode объекта
+     */
+    @Override
+    public int hashCode() {
+        return this.getLogin().hashCode();
+    }
+
 }

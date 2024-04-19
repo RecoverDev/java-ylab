@@ -1,15 +1,17 @@
 package ru.list.recover.storages.impl;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import ru.list.recover.models.User;
 import ru.list.recover.storages.UserRepository;
 
 public class UserRepositoryImpl implements UserRepository {
 
-    private List<User> users = new ArrayList<>();
+    private final Set<User> users = new HashSet<>();
 
     /**
      * @param object
@@ -18,15 +20,8 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public boolean insert(User object) {
         object.setId(Math.max(object.getId(), 1));
-        if (users.stream().filter(u -> u.getId() == object.getId()).count() > 0) {
-            int id = users.stream().map(u -> u.getId()).max((x, y) -> x.compareTo(y)).get() + 1;
-            object.setId(id);
-        }
-        if (users.stream().filter(u -> u.getName().equals(object.getName())).count() > 0) {
-            return false;
-        }
-        if (users.stream().filter(u -> u.getLogin().equals(object.getLogin())).count() > 0) {
-            return false;
+        while (this.findById(object.getId()) != null) {
+            object.setId(object.getId() + 1);
         }
         return users.add(object);
     }
@@ -38,13 +33,16 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User findById(int id) {
-        Optional<User> result = users.stream().filter(u -> u.getId() == id).findFirst();
-        return result.isPresent() ? result.get() : null;
+        List<User> list = users.stream().filter(u -> u.getId() == id).collect(Collectors.toList());
+        if (list.size() > 0) {
+            return list.get(0);
+        }
+        return null;
     }
 
     @Override
     public List<User> findAll() {
-        return users;
+        return users.stream().collect(Collectors.toList());
     }
 
     @Override
@@ -54,26 +52,16 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User findByLogin(String login) {
-        Optional<User> user = users.stream().filter(u -> u.getLogin().equals(login)).findFirst();
-        return user.isPresent() ? user.get() : null;
-    }
-
-    @Override
-    public User findByName(String login) {
-        Optional<User> user = users.stream().filter(u -> u.getName().equals(login)).findFirst();
-        return user.isPresent() ? user.get() : null;
+        return users.stream().filter(u -> u.getLogin().equals(login)).findFirst().get();
     }
 
     @Override
     public void update(User object) {
         User user = this.findById(object.getId());
-        if (user == null) {
-            this.insert(object);
-        } else {
-            int index = users.indexOf(user);
-            users.set(index, object);
-        }
-
+        if (user != null) {
+            this.delete(object);
+        } 
+        this.insert(object);
     }
 
 }
