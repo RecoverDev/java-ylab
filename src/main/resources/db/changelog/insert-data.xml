@@ -79,5 +79,50 @@
         <column name="type_id" valueNumeric="4"/>
         <column name="calories" value="500"/>
     </insert>
+
+    <insert schemaName="fitness"
+            tableName="practices">
+         <column name="id" valueNumeric="1"/>
+         <column name="date" value="2024-04-10"/>
+         <column name="user_id" value="1"/>
+         <column name="workout_id" value="1"/>
+         <column name="count_exercise" value="12"/>
+         <column name="amount" value="45"/>
+         <column name="calories" value="1500"/>
+         <column name="desc" value=""/>
+    </insert>
+    <insert schemaName="fitness"
+            tableName="practices">
+         <column name="id" valueNumeric="2"/>
+         <column name="date" value="2024-04-11"/>
+         <column name="user_id" value="2"/>
+         <column name="workout_id" value="2"/>
+         <column name="count_exercise" value="10"/>
+         <column name="amount" value="60"/>
+         <column name="calories" value="2500"/>
+         <column name="desc" value=""/>
+    </insert>
+    <insert schemaName="fitness"
+            tableName="practices">
+         <column name="id" valueNumeric="3"/>
+         <column name="date" value="2024-04-09"/>
+         <column name="user_id" value="1"/>
+         <column name="workout_id" value="3"/>
+         <column name="count_exercise" value="8"/>
+         <column name="amount" value="30"/>
+         <column name="calories" value="1500"/>
+         <column name="desc" value=""/>
+    </insert>
+    <insert schemaName="fitness"
+            tableName="practices">
+         <column name="id" valueNumeric="4"/>
+         <column name="date" value="2024-04-13"/>
+         <column name="user_id" value="1"/>
+         <column name="workout_id" value="1"/>
+         <column name="count_exercise" value="12"/>
+         <column name="amount" value="45"/>
+         <column name="calories" value="1500"/>
+         <column name="desc" value=""/>
+    </insert>
    </changeSet>
 </databaseChangeLog>
