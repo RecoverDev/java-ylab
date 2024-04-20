@@ -1,5 +1,9 @@
 package ru.list.recover;
 
+import liquibase.exception.LiquibaseException;
+import ru.list.recover.db.DBConnection;
+import ru.list.recover.db.FitnessProperties;
+import ru.list.recover.db.Migration;
 import ru.list.recover.in.Response;
 import ru.list.recover.logger.Logger;
 import ru.list.recover.models.User;
@@ -16,10 +20,10 @@ import ru.list.recover.storages.PracticeRepository;
 import ru.list.recover.storages.TypeWorkoutRepository;
 import ru.list.recover.storages.UserRepository;
 import ru.list.recover.storages.WorkoutRepository;
-import ru.list.recover.storages.impl.PracticeRepositoryImpl;
-import ru.list.recover.storages.impl.TypeWorkoutRepositoryImpl;
-import ru.list.recover.storages.impl.UserRepositoryImpl;
-import ru.list.recover.storages.impl.WorkoutRepositoryImpl;
+import ru.list.recover.storages.impl.PracticeRepositoryDB;
+import ru.list.recover.storages.impl.TypeWorkoutRepositoryDB;
+import ru.list.recover.storages.impl.UserRepositoryDB;
+import ru.list.recover.storages.impl.WorkoutRepositoryDB;
 
 /**
  * класс создает и управляет вызовами сервисов и хранилищ,
@@ -44,11 +48,24 @@ public class Container implements IObserve {
 
     public Container() {
         loger = new Logger();
+        FitnessProperties properties = new FitnessProperties("src/main/resources/fitness.properties", loger);
+        properties.load();
 
-        userRepository = new UserRepositoryImpl();
-        practiceRepository = new PracticeRepositoryImpl();
-        typeWorkoutRepository = new TypeWorkoutRepositoryImpl();
-        workoutRepository = new WorkoutRepositoryImpl();
+        DBConnection con = new DBConnection(properties, loger);
+        con.connect();
+        Migration migration = new Migration(con.getConnection(), loger,"fitness");
+        try {
+            migration.migrate();
+        } catch (LiquibaseException e) {
+            loger.addRecord("Ошибка миграции: " + e.getMessage(), false);
+        }
+
+        con.connect();
+
+        userRepository = new UserRepositoryDB(con.getConnection(), "fitness");
+        practiceRepository = new PracticeRepositoryDB(con.getConnection(), "fitness");
+        typeWorkoutRepository = new TypeWorkoutRepositoryDB(con.getConnection(), "fitness");
+        workoutRepository = new WorkoutRepositoryDB(con.getConnection(), "fitness");
 
         userService =  new UserServiceImpl(userRepository, new Response(), loger);
         userService.addListener(this);
@@ -61,14 +78,6 @@ public class Container implements IObserve {
 
         adminService = new AdminServiceImpl(userRepository, workoutRepository, practiceRepository, new Response(), loger);
         adminService.addListener(this);
-
-        // для тестов
-        FillData fillData = new FillData(userRepository,workoutRepository, typeWorkoutRepository,practiceRepository);
-        fillData.fillTestData();
-        userRepository = fillData.getUserRepository();
-        typeWorkoutRepository = fillData.getTypeWorkoutRepository();
-        workoutRepository = fillData.getWorkoutRepository();
-        practiceRepository = fillData.getPracticeRepository();
 
     }
 
