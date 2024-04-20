@@ -1,0 +1,32 @@
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+   <changeSet id="create-table" author="user">
+     <createTable schemaName="fitness" tableName="users">
+         <column name="id" type="BIGINT" autoIncrement="true" >
+            <constraints primaryKey="true" nullable="false" />
+         </column>
+         <column name="name" type="VARCHAR(255)"/>
+         <column name="login" type="VARCHAR(255)"/>
+         <column name="password" type="VARCHAR(255)"/>
+         <column name="role" type="BIGINT"/> 
+     </createTable>
+     <createTable schemaName="fitness" tableName="typeworkout">
+         <column name="id" type="BIGINT" autoIncrement="true">
+            <constraints primaryKey="true" nullable="false"/>
+         </column>
+         <column name="name" type="VARCHAR(255)"/>
+     </createTable>
+     <createTable schemaName="fitness" tableName="workout">
+         <column name="id" type="BIGINT" autoIncrement="true">
+            <constraints primaryKey="true" nullable="false"/>
+         </column>
+         <column name="name" type="VARCHAR(255)"/>
+         <column name="type_id" type="BIGINT"/>
+         <column name="calories" type="DOUBLE"/>
+     </createTable>
+   </changeSet>
+</databaseChangeLog>

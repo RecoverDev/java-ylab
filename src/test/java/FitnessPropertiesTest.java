@@ -14,7 +14,7 @@ public class FitnessPropertiesTest {
     public void readPropertyTest() throws IOException {
         Logger logger = new Logger();
 
-        FitnessProperties properties = new FitnessProperties("src\\main\\resources\\fitness.properties", logger);
+        FitnessProperties properties = new FitnessProperties("src/main/resources/fitness.properties", logger);
         properties.load();
         Assertions.assertEquals(properties.getUser(), "fitnessUser");
     }

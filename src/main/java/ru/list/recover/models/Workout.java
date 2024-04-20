@@ -22,7 +22,14 @@ public class Workout {
      * наименование тренировки
      */
     private String name;
+
+    /**
+     * тип тренировки
+     */
     private TypeWorkout type;
+    /**
+     * количество калорий, потраченных на тренировке
+     */
     private double calories;
 
     /**

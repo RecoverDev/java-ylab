@@ -1,0 +1,83 @@
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+   <changeSet id="insert-data" author="user">
+     <insert schemaName="fitness"
+             tableName="users">
+         <column name="id" valueNumeric="1"/>
+         <column name="name" value="Вася Пупкин"/>
+         <column name="login" value="user1"/>
+         <column name="password" value="111"/>
+         <column name="role" value="0"/>
+     </insert>
+     <insert schemaName="fitness"
+             tableName="users">
+         <column name="id" valueNumeric="2"/>
+         <column name="name" value="Иван Второй"/>
+         <column name="login" value="user2"/>
+         <column name="password" value="222"/>
+         <column name="role" value="0"/>
+     </insert>
+     <insert schemaName="fitness"
+             tableName="users">
+         <column name="id" valueNumeric="3"/>
+         <column name="name" value="Админ Душнилкин"/>
+         <column name="login" value="admin"/>
+         <column name="password" value="1234"/>
+         <column name="role" value="1"/>
+     </insert>
+
+    <insert schemaName="fitness"
+            tableName="typeworkout">
+        <column name="id" valueNumeric="1"/>
+        <column name="name" value="Кардио"/>
+    </insert>
+    <insert schemaName="fitness"
+            tableName="typeworkout">
+        <column name="id" valueNumeric="2"/>
+        <column name="name" value="Силовая"/>
+    </insert>
+    <insert schemaName="fitness"
+            tableName="typeworkout">
+        <column name="id" valueNumeric="3"/>
+        <column name="name" value="Аэробная"/>
+    </insert>
+    <insert schemaName="fitness"
+            tableName="typeworkout">
+        <column name="id" valueNumeric="4"/>
+        <column name="name" value="Растяжка"/>
+    </insert>
+
+    <insert schemaName="fitness"
+            tableName="workout">
+        <column name="id" valueNumeric="1"/>
+        <column name="name" value="Сайкл"/>
+        <column name="type_id" valueNumeric="1"/>
+        <column name="calories" value="1500"/>
+    </insert>
+    <insert schemaName="fitness"
+            tableName="workout">
+        <column name="id" valueNumeric="2"/>
+        <column name="name" value="Кроссфит"/>
+        <column name="type_id" valueNumeric="2"/>
+        <column name="calories" value="2500"/>
+    </insert>
+    <insert schemaName="fitness"
+            tableName="workout">
+        <column name="id" valueNumeric="3"/>
+        <column name="name" value="Табата"/>
+        <column name="type_id" valueNumeric="2"/>
+        <column name="calories" value="2500"/>
+    </insert>
+    <insert schemaName="fitness"
+            tableName="workout">
+        <column name="id" valueNumeric="4"/>
+        <column name="name" value="Йога"/>
+        <column name="type_id" valueNumeric="4"/>
+        <column name="calories" value="500"/>
+    </insert>
+   </changeSet>
+</databaseChangeLog>
